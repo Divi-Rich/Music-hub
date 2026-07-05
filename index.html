@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naija Music Hub</title>
+</head>
+<body style="background-color: #121212; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0;">
+
+    <div style="background-color: #ff3366; color: #ffffff; padding: 6px 0; font-size: 13px; font-weight: bold; overflow: hidden; white-space: nowrap;">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            🔥 Welcome to Naija Music Hub! Designed completely offline by Eduok Divine Richard. New lyrics dropping daily! 🔥
+        </marquee>
+    </div>
+
+    <header style="background-color: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #00ff88;">
+        <h1 style="margin: 0; color: #00ff88;">Naija Music Hub</h1>
+        <p style="margin: 5px 0 0 0; color: #aaa; font-size: 14px;">Latest Lyrics, Videos & Artist Updates</p>
+    </header>
+
+    <div id="homeScreen" style="padding: 20px; display: block;">
+        <div style="margin-bottom: 20px;">
+            <input type="text" placeholder="🔍 Search for lyrics or artists..." style="width: 100%; padding: 12px; background-color: #1f1f1f; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; font-size: 14px;">
+        </div>
+        <h2 style="color: #00ff88; font-size: 22px; margin-top: 0;">Latest Trending Lyrics</h2>
+
+        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
+            <h3>Lonely Streets</h3><p style="color: #ccc; font-size: 14px;">By Asake Jr</p>
+            <button onclick="switchScreen('lonelyStreetsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        </div>
+
+        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
+            <h3>The Nights</h3><p style="color: #ccc; font-size: 14px;">By Avicii</p>
+            <button onclick="switchScreen('theNightsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        </div>
+
+        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333;">
+            <h3>Billionaire</h3><p style="color: #ccc; font-size: 14px;">By Teni</p>
+            <button onclick="switchScreen('billionaireScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        </div>
+
+        <div style="background-color: #2a2a2a; color: #00ff88; text-align: center; padding: 35px 10px; border: 2px dashed #00ff88; border-radius: 8px; font-weight: bold; font-size: 13px; margin-bottom: 20px;">
+            [ ADVERTISEMENT SPACE - GOOGLE ADSENSE GOES HERE ]
+        </div>
+    </div>    <div id="lonelyStreetsScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+            <h2 style="color: #00ff88;">Lonely Streets</h2><p style="color: #aaa; font-style: italic;">By Asake Jr</p>
+            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
+                [Chorus]
+                Walking down these lonely streets tonight
+                Looking for a way to make it right
+                Mama told me everything's fine
+                Just keep on pressing till your star align
+                [Verse 1]
+                No data in my phone, but I got a dream
+                Building up my future, working with my team...
+            </div>
+        </div>
+    </div>
+
+    <div id="theNightsScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+            <h2 style="color: #00ff88;">The Nights</h2><p style="color: #aaa; font-style: italic;">By Avicii</p>
+            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
+                [Chorus]
+                He said, "One day, you'll leave this world behind
+                So live a life you will remember"
+                My father told me when I was just a child
+                "These are the nights that never die"...
+            </div>
+        </div>
+    </div>
+
+    <div id="billionaireScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+            <h2 style="color: #00ff88;">Billionaire</h2><p style="color: #aaa; font-style: italic;">By Teni</p>
+            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
+                [Chorus]
+                Otedola o l'ori meji
+                Dangote o l'ori meji
+                I kuku t'ona mo
+                I want to make this money o!
+            </div>
+        </div>
+    </div>    <footer style="background-color: #1f1f1f; text-align: center; padding: 25px; border-top: 1px solid #333; margin-top: 40px;">
+        <p style="margin: 0; font-size: 14px; color: #aaa; font-weight: bold;">
+            ⚡ Built and Programmed by <span style="color: #00ff88;">Eduok Divine Richard</span> ⚡
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 11px; color: #666;">
+            All Code Compiled Completely Offline on a Smartphone
+        </p>
+    </footer>
+
+    <script>
+        function switchScreen(screenId) {
+            // Hide all layout blocks smoothly
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('lonelyStreetsScreen').style.display = 'none';
+            document.getElementById('theNightsScreen').style.display = 'none';
+            document.getElementById('billionaireScreen').style.display = 'none';
+
+            // Make exactly the clicked template screen appear
+            document.getElementById(screenId).style.display = 'block';
+            window.scrollTo({ top: 0 });
+        }
+    </script>
+</body>
+</html>
