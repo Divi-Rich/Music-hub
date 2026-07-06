@@ -3,89 +3,543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naija Music Hub</title>
+    <title>Naija Music Hub | Afrobeats, Gospel & Pop Song Stories</title>
+    <meta name="description" content="Naija Music Hub covers the latest Afrobeats, Gospel and pop songs — with breakdowns, meaning, and background on the tracks blowing up right now.">
+    <meta name="keywords" content="naija music, afrobeats news, nigerian gospel music, naija gospel songs, nigerian songs, song meaning">
+    <meta property="og:title" content="Naija Music Hub">
+    <meta property="og:description" content="Latest Naija Afrobeats, Gospel and pop songs, artist stories and music news.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #121212; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0;
+            transition: background-color 0.25s, color 0.25s;
+        }
+        body.light { background-color: #f4f4f4; color: #111; }
+        body.light .songCard, body.light .related-card, body.light .newsCard { background-color: #fff; border-color: #ddd; color: #111; }
+        body.light header, body.light footer { background-color: #fff !important; border-color: #ddd !important; }
+        body.light .tab-btn { background: #fff; color: #333; border-color: #ccc; }
+        body.light #searchInput { background-color: #fff; color: #111; border-color: #ccc; }
+        body.light .follow-box { background: linear-gradient(135deg, #fff, #e9fff5); }
+        body.light p, body.light h3 { color: inherit; }
+
+        .tab-btn {
+            background: #1f1f1f; color: #ccc; border: 1px solid #333; padding: 8px 14px;
+            border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; margin-right: 8px;
+            white-space: nowrap;
+        }
+        .tab-btn.active { background: #00ff88; color: #000; border-color: #00ff88; }
+        .tab-row { display: flex; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+        .songCard { background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333; position: relative; }
+        .newsCard { background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333; }
+        .share-row { display: flex; gap: 10px; margin: 16px 0; }
+        .share-btn {
+            flex: 1; text-align: center; padding: 10px; border-radius: 6px; font-weight: bold;
+            font-size: 13px; text-decoration: none; color: #000;
+        }
+        .related-card {
+            display: block; background-color: #1f1f1f; border: 1px solid #333; border-radius: 8px;
+            padding: 12px; margin-bottom: 10px; color: #fff; text-decoration: none; cursor: pointer;
+        }
+        .related-card:hover { border-color: #00ff88; }
+        .follow-box {
+            background: linear-gradient(135deg, #1f1f1f, #14261e); border: 1px solid #00ff88;
+            border-radius: 8px; padding: 18px; text-align: center; margin: 20px 0;
+        }
+        .badge {
+            position: absolute; top: -8px; right: 10px; background: #ff3366; color: #fff;
+            font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px;
+        }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 0 20px; }
+        .theme-toggle {
+            background: #1f1f1f; border: 1px solid #333; color: #fff; padding: 6px 12px;
+            border-radius: 20px; font-size: 12px; cursor: pointer;
+        }
+        body.light .theme-toggle { background: #fff; color: #111; border-color: #ccc; }
+        .spotlight-box {
+            background: linear-gradient(135deg, #00ff88, #00cc6e); color: #000; border-radius: 10px;
+            padding: 16px; margin-bottom: 18px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,255,136,0.25);
+        }
+        .genre-tag { font-size: 11px; color: #00ff88; font-weight: bold; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        body.light .genre-tag { color: #009f5c; }
+        .faq-item { margin-bottom: 14px; }
+        .faq-item summary { cursor: pointer; font-weight: bold; color: #00ff88; font-size: 14px; padding: 6px 0; }
+        .faq-item p { font-size: 13px; color: #ccc; line-height: 1.6; margin: 6px 0 0 0; }
+        .listen-row { display: flex; gap: 8px; margin: 14px 0; flex-wrap: wrap; }
+        .listen-btn {
+            flex: 1; min-width: 90px; text-align: center; padding: 10px 8px; border-radius: 6px;
+            font-weight: bold; font-size: 12px; text-decoration: none; border: 1px solid #333;
+        }
+        body.light .faq-item p { color: #444; }
+    </style>
 </head>
-<body style="background-color: #121212; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0;">
+<body>
 
     <div style="background-color: #ff3366; color: #ffffff; padding: 6px 0; font-size: 13px; font-weight: bold; overflow: hidden; white-space: nowrap;">
         <marquee behavior="scroll" direction="left" scrollamount="6">
-            🔥 Welcome to Naija Music Hub! Designed completely offline by Eduok Divine Richard. New lyrics dropping daily! 🔥
+            🔥 Welcome to Naija Music Hub! Now featuring Gospel, Afrobeats & Pop! New breakdowns dropping regularly! 🔥
         </marquee>
+    </div>
+
+    <div class="top-bar">
+        <span style="font-size: 12px; color: #888;">🌗 Theme</span>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
     </div>
 
     <header style="background-color: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #00ff88;">
         <h1 style="margin: 0; color: #00ff88;">Naija Music Hub</h1>
-        <p style="margin: 5px 0 0 0; color: #aaa; font-size: 14px;">Latest Lyrics, Videos & Artist Updates</p>
+        <p style="margin: 5px 0 0 0; color: #aaa; font-size: 14px;">Afrobeats, Gospel & Pop — Song Stories & Music News</p>
     </header>
 
     <div id="homeScreen" style="padding: 20px; display: block;">
-        <div style="margin-bottom: 20px;">
-            <input type="text" placeholder="🔍 Search for lyrics or artists..." style="width: 100%; padding: 12px; background-color: #1f1f1f; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; font-size: 14px;">
-        </div>
-        <h2 style="color: #00ff88; font-size: 22px; margin-top: 0;">Latest Trending Lyrics</h2>
-
-        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
-            <h3>Lonely Streets</h3><p style="color: #ccc; font-size: 14px;">By Asake Jr</p>
-            <button onclick="switchScreen('lonelyStreetsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        <div style="margin-bottom: 15px;">
+            <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="🔍 Search for songs or artists..." style="width: 100%; padding: 12px; background-color: #1f1f1f; border: 1px solid #333; color: white; border-radius: 8px; font-size: 14px;">
         </div>
 
-        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
-            <h3>The Nights</h3><p style="color: #ccc; font-size: 14px;">By Avicii</p>
-            <button onclick="switchScreen('theNightsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        <div class="spotlight-box" onclick="switchScreen('wayMakerScreen')">
+            <p style="margin: 0 0 4px 0; font-size: 11px; font-weight: bold; color: #00ff88; letter-spacing: 1px;">🎧 SONG OF THE DAY</p>
+            <h3 style="margin: 0 0 2px 0; font-size: 18px;">Way Maker</h3>
+            <p style="margin: 0; font-size: 13px; color: #ccc;">By Sinach — tap to read the story behind it</p>
         </div>
 
-        <div style="background-color: #1f1f1f; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333;">
-            <h3>Billionaire</h3><p style="color: #ccc; font-size: 14px;">By Teni</p>
-            <button onclick="switchScreen('billionaireScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">View Lyrics</button>
+        <div class="tab-row" id="tabRow">
+            <button class="tab-btn active" onclick="filterGenre('all', this)">All</button>
+            <button class="tab-btn" onclick="filterGenre('afrobeats', this)">Afrobeats</button>
+            <button class="tab-btn" onclick="filterGenre('gospel', this)">Gospel</button>
+            <button class="tab-btn" onclick="filterGenre('pop', this)">Pop / Dance</button>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px; margin-top: 0;">Trending Songs</h2>
+
+        <div class="songCard" data-name="lonely streets asake jr" data-genre="afrobeats">
+            <h3 style="margin: 0 0 4px 0;">Lonely Streets</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Asake Jr</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('lonelyStreetsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="the nights avicii" data-genre="pop">
+            <h3 style="margin: 0 0 4px 0;">The Nights</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Avicii</p>
+            <p class="genre-tag">🎧 Pop / Dance</p>
+            <button onclick="switchScreen('theNightsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="billionaire teni" data-genre="afrobeats">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Billionaire</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Teni</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('billionaireScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="higher burna boy" data-genre="afrobeats">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Higher</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Burna Boy</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('higherScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="calm down rema" data-genre="afrobeats">
+            <h3 style="margin: 0 0 4px 0;">Calm Down</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Rema</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('calmDownScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="way maker sinach" data-genre="gospel">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Way Maker</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Sinach</p>
+            <p class="genre-tag">🙏 Gospel</p>
+            <button onclick="switchScreen('wayMakerScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="excess love mercy chinwo" data-genre="gospel">
+            <h3 style="margin: 0 0 4px 0;">Excess Love</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Mercy Chinwo</p>
+            <p class="genre-tag">🙏 Gospel</p>
+            <button onclick="switchScreen('excessLoveScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="nara ada ehi" data-genre="gospel">
+            <h3 style="margin: 0 0 4px 0;">Nara</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Ada Ehi</p>
+            <p class="genre-tag">🙏 Gospel</p>
+            <button onclick="switchScreen('naraScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
         <div style="background-color: #2a2a2a; color: #00ff88; text-align: center; padding: 35px 10px; border: 2px dashed #00ff88; border-radius: 8px; font-weight: bold; font-size: 13px; margin-bottom: 20px;">
-            [ ADVERTISEMENT SPACE - GOOGLE ADSENSE GOES HERE ]
+            [ ADVERTISEMENT SPACE - AD NETWORK GOES HERE ]
         </div>
-    </div>    <div id="lonelyStreetsScreen" style="padding: 20px; display: none;">
+
+        <div class="follow-box">
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #00ff88;">📲 Never Miss a Drop</p>
+            <p style="margin: 0 0 12px 0; font-size: 13px; color: #ccc;">Follow for new song breakdowns and Naija music news as it happens.</p>
+            <a href="#" style="display: inline-block; background: #00ff88; color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 13px;">Follow on WhatsApp Channel</a>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">Music News</h2>
+
+        <div class="newsCard">
+            <h3 style="margin: 0 0 6px 0; font-size: 16px;">Afrobeats Keeps Growing Its Global Reach</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.6; margin: 0;">
+                Naija artists continue to top international streaming charts and sell out arenas abroad.
+                More collaborations between Nigerian acts and global stars are landing this year, pushing
+                the genre further into the mainstream. Check back here for updates on new drops and tours.
+            </p>
+        </div>
+
+        <div class="newsCard">
+            <h3 style="margin: 0 0 6px 0; font-size: 16px;">Nigerian Gospel Music Is Having a Global Moment</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.6; margin: 0;">
+                Nigerian gospel artists are drawing massive streaming numbers and packed international
+                concerts, with worship anthems crossing over into churches worldwide. Expect more gospel
+                coverage here as the genre keeps growing.
+            </p>
+        </div>
+    </div>
+
+    <div id="lonelyStreetsScreen" style="padding: 20px; display: none;">
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
-        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
-            <h2 style="color: #00ff88;">Lonely Streets</h2><p style="color: #aaa; font-style: italic;">By Asake Jr</p>
-            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
-                [Chorus]
-                Walking down these lonely streets tonight
-                Looking for a way to make it right
-                Mama told me everything's fine
-                Just keep on pressing till your star align
-                [Verse 1]
-                No data in my phone, but I got a dream
-                Building up my future, working with my team...
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Lonely Streets</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Asake Jr</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                "Walking down these lonely streets tonight..."
             </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                "Lonely Streets" is a reflective track about pushing through hard times with faith that
+                things will get better. The song leans on a familiar Naija songwriting theme: a mother's
+                encouragement as an anchor during uncertain seasons. Asake Jr uses the imagery of empty
+                streets at night to represent isolation and self-doubt, while the hook carries a message
+                of quiet resilience — the idea that staying consistent eventually pays off, even when
+                progress feels invisible.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Lonely Streets Asake Jr" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Lonely%20Streets%20Asake%20Jr" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Lonely%20Streets%20Asake%20Jr" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Lonely%20Streets%20Asake%20Jr" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('billionaireScreen')">🎵 Billionaire — Teni</a>
+            <a class="related-card" onclick="switchScreen('calmDownScreen')">🎵 Calm Down — Rema</a>
         </div>
     </div>
 
     <div id="theNightsScreen" style="padding: 20px; display: none;">
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
-        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
-            <h2 style="color: #00ff88;">The Nights</h2><p style="color: #aaa; font-style: italic;">By Avicii</p>
-            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
-                [Chorus]
-                He said, "One day, you'll leave this world behind
-                So live a life you will remember"
-                My father told me when I was just a child
-                "These are the nights that never die"...
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">The Nights</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Avicii</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                "He said, one day you'll leave this world behind..."
             </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                "The Nights" is one of Avicii's most enduring records, released in 2014 as part of a short
+                film series produced with a beverage brand. The song is built around a father's advice to
+                live boldly and make memories worth telling. Avicii, the Swedish producer behind global
+                hits, wrote much of his music around themes of legacy and mortality, which became especially
+                poignant following his passing in 2018. The track remains a favorite at celebrations and
+                farewells for its uplifting, anthemic feel.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "The Nights Avicii" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=The%20Nights%20Avicii" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/The%20Nights%20Avicii" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=The%20Nights%20Avicii" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20The%20Nights%20by%20Avicii%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20The%20Nights%20by%20Avicii" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('higherScreen')">🎵 Higher — Burna Boy</a>
+            <a class="related-card" onclick="switchScreen('lonelyStreetsScreen')">🎵 Lonely Streets — Asake Jr</a>
         </div>
     </div>
 
     <div id="billionaireScreen" style="padding: 20px; display: none;">
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
-        <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; border: 1px solid #333;">
-            <h2 style="color: #00ff88;">Billionaire</h2><p style="color: #aaa; font-style: italic;">By Teni</p>
-            <div style="white-space: pre-line; font-size: 16px; line-height: 1.8;">
-                [Chorus]
-                Otedola o l'ori meji
-                Dangote o l'ori meji
-                I kuku t'ona mo
-                I want to make this money o!
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Billionaire</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Teni</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                "Otedola o l'ori meji, Dangote o l'ori meji..."
             </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                "Billionaire" is a high-energy anthem from Nigerian singer Teni, built around ambition and
+                the hustle mentality common in Naija pop. The opening line references Femi Otedola and
+                Aliko Dangote — two of Nigeria's most prominent billionaires — as aspirational figures,
+                a common device in Afrobeats where real-life business icons are name-dropped to symbolize
+                success. The track's playful, chant-like hook made it a favorite at parties and a staple
+                on Naija playlists after its release.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Billionaire Teni" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Billionaire%20Teni" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Billionaire%20Teni" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Billionaire%20Teni" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Billionaire%20by%20Teni%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Billionaire%20by%20Teni" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('lonelyStreetsScreen')">🎵 Lonely Streets — Asake Jr</a>
+            <a class="related-card" onclick="switchScreen('higherScreen')">🎵 Higher — Burna Boy</a>
         </div>
-    </div>    <footer style="background-color: #1f1f1f; text-align: center; padding: 25px; border-top: 1px solid #333; margin-top: 40px;">
+    </div>
+
+    <div id="higherScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Higher</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Burna Boy</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A confident, mid-tempo record about rising above doubt and staying focused on growth.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Burna Boy has built his sound around blending Afrobeats with dancehall and reggae
+                influences, and this track continues that signature style. Known globally as one of
+                Afrobeats' biggest exports, Burna Boy frequently themes his music around self-belief,
+                Afrocentric pride, and personal triumph — themes that resonate strongly with his
+                worldwide fanbase.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Higher Burna Boy" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Higher%20Burna%20Boy" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Higher%20Burna%20Boy" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Higher%20Burna%20Boy" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Higher%20by%20Burna%20Boy%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Higher%20by%20Burna%20Boy" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('calmDownScreen')">🎵 Calm Down — Rema</a>
+            <a class="related-card" onclick="switchScreen('billionaireScreen')">🎵 Billionaire — Teni</a>
+        </div>
+    </div>
+
+    <div id="calmDownScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Calm Down</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Rema</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A smooth, melodic love song built on gentle percussion and a catchy, repeatable hook.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                "Calm Down" became one of the most successful Afrobeats exports in history, spending
+                over a year on the Billboard Hot 100 after a remix with Selena Gomez. Rema's melodic,
+                Afro-fusion style — sometimes called "Afrorave" — blends Nigerian rhythms with global
+                pop sensibilities, which helped the track cross over into mainstream markets far beyond
+                Nigeria.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Calm Down Rema" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Calm%20Down%20Rema" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Calm%20Down%20Rema" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Calm%20Down%20Rema" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Calm%20Down%20by%20Rema%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Calm%20Down%20by%20Rema" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('higherScreen')">🎵 Higher — Burna Boy</a>
+            <a class="related-card" onclick="switchScreen('theNightsScreen')">🎵 The Nights — Avicii</a>
+        </div>
+    </div>
+
+    <div id="wayMakerScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Way Maker</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Sinach</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                "You are here, moving in our midst..."
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                "Way Maker" is arguably the most globally influential Nigerian gospel song of the past
+                decade. Written and performed by Sinach, a Lagos-based worship leader and songwriter, the
+                track has been covered by artists worldwide including Michael W. Smith and Leeland, and
+                translated into multiple languages for churches across continents. Its simple, repeating
+                declarations — describing God as a Way Maker, Miracle Worker, Promise Keeper — are designed
+                for congregational worship, which is part of why it spread so widely beyond Nigeria.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Way Maker Sinach" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Way%20Maker%20Sinach" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Way%20Maker%20Sinach" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Way%20Maker%20Sinach" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Way%20Maker%20by%20Sinach%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Way%20Maker%20by%20Sinach" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('excessLoveScreen')">🎵 Excess Love — Mercy Chinwo</a>
+            <a class="related-card" onclick="switchScreen('naraScreen')">🎵 Nara — Ada Ehi</a>
+        </div>
+    </div>
+
+    <div id="excessLoveScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Excess Love</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Mercy Chinwo</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A soaring, emotional worship ballad about gratitude for unearned grace.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Mercy Chinwo is one of Nigeria's most celebrated gospel vocalists, known for a powerful,
+                soulful voice rooted in Nigerian church tradition. "Excess Love" reflects a common gospel
+                theme of overwhelming, undeserved grace, delivered with the kind of vocal runs and
+                dynamic build that have made her a standout at live worship events across Nigeria and
+                the diaspora.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Excess Love Mercy Chinwo" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Excess%20Love%20Mercy%20Chinwo" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Excess%20Love%20Mercy%20Chinwo" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Excess%20Love%20Mercy%20Chinwo" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('wayMakerScreen')">🎵 Way Maker — Sinach</a>
+            <a class="related-card" onclick="switchScreen('naraScreen')">🎵 Nara — Ada Ehi</a>
+        </div>
+    </div>
+
+    <div id="naraScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Nara</h2>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Ada Ehi</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                An energetic praise anthem sung largely in Igbo, built for dancing in celebration.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Ada Ehi is known for blending contemporary gospel production with Nigerian indigenous
+                languages, and "Nara" — meaning roughly "receive" or "take" in Igbo — follows that
+                pattern. The song is built for high-energy praise and dance, a style distinct from the
+                slower worship ballads that dominate much of the genre, showing the range within Nigerian
+                gospel music.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Nara Ada Ehi" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Nara%20Ada%20Ehi" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Nara%20Ada%20Ehi" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Nara%20Ada%20Ehi" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Nara%20by%20Ada%20Ehi%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Nara%20by%20Ada%20Ehi" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('wayMakerScreen')">🎵 Way Maker — Sinach</a>
+            <a class="related-card" onclick="switchScreen('excessLoveScreen')">🎵 Excess Love — Mercy Chinwo</a>
+        </div>
+        <h2 style="color: #00ff88; font-size: 22px;">About Naija Music Hub</h2>
+        <details class="faq-item">
+            <summary>What is Naija Music Hub?</summary>
+            <p>Naija Music Hub is a blog covering Afrobeats, Nigerian gospel, and pop music — with song breakdowns, artist background, and where to stream each track legally.</p>
+        </details>
+        <details class="faq-item">
+            <summary>Do you post full lyrics?</summary>
+            <p>No — we share a short opening line for context and link out to official streaming platforms so artists get proper credit and royalties.</p>
+        </details>
+        <details class="faq-item">
+            <summary>How often is new content added?</summary>
+            <p>New song features and music news are added regularly. Follow our WhatsApp channel above to get notified.</p>
+        </details>
+    </div>
+
+    <footer style="background-color: #1f1f1f; text-align: center; padding: 25px; border-top: 1px solid #333; margin-top: 40px;">
         <p style="margin: 0; font-size: 14px; color: #aaa; font-weight: bold;">
             ⚡ Built and Programmed by <span style="color: #00ff88;">Eduok Divine Richard</span> ⚡
         </p>
@@ -95,16 +549,49 @@
     </footer>
 
     <script>
-        function switchScreen(screenId) {
-            // Hide all layout blocks smoothly
-            document.getElementById('homeScreen').style.display = 'none';
-            document.getElementById('lonelyStreetsScreen').style.display = 'none';
-            document.getElementById('theNightsScreen').style.display = 'none';
-            document.getElementById('billionaireScreen').style.display = 'none';
+        var allScreens = [
+            'homeScreen','lonelyStreetsScreen','theNightsScreen','billionaireScreen',
+            'higherScreen','calmDownScreen','wayMakerScreen','excessLoveScreen','naraScreen'
+        ];
 
-            // Make exactly the clicked template screen appear
+        function switchScreen(screenId) {
+            allScreens.forEach(function(id) {
+                document.getElementById(id).style.display = 'none';
+            });
             document.getElementById(screenId).style.display = 'block';
             window.scrollTo({ top: 0 });
+        }
+
+        function filterSongs() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var cards = document.getElementsByClassName('songCard');
+            for (var i = 0; i < cards.length; i++) {
+                var name = cards[i].getAttribute('data-name');
+                if (name) {
+                    cards[i].style.display = name.includes(query) ? 'block' : 'none';
+                }
+            }
+        }
+
+        function filterGenre(genre, btn) {
+            var buttons = document.getElementsByClassName('tab-btn');
+            for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+            btn.classList.add('active');
+
+            var cards = document.getElementsByClassName('songCard');
+            for (var i = 0; i < cards.length; i++) {
+                var g = cards[i].getAttribute('data-genre');
+                if (g) {
+                    cards[i].style.display = (genre === 'all' || g === genre) ? 'block' : 'none';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            var body = document.body;
+            var btn = document.getElementById('themeBtn');
+            body.classList.toggle('light');
+            btn.textContent = body.classList.contains('light') ? '☀️ Light' : '🌙 Dark';
         }
     </script>
 </body>
