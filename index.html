@@ -72,9 +72,38 @@
             font-weight: bold; font-size: 12px; text-decoration: none; border: 1px solid #333;
         }
         body.light .faq-item p { color: #444; }
+        .like-btn {
+            background: none; border: 1px solid #333; color: #ccc; padding: 8px 14px; border-radius: 20px;
+            font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .like-btn.liked { border-color: #ff3366; color: #ff3366; background: rgba(255,51,102,0.1); }
+        body.light .like-btn { border-color: #ccc; color: #555; }
+        .scroll-top-btn {
+            position: fixed; bottom: 20px; right: 20px; background: #00ff88; color: #000; border: none;
+            width: 44px; height: 44px; border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4); display: none; z-index: 999;
+        }
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #00ff88;
+            color: #000; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: bold;
+            display: none; z-index: 1000;
+        }
+        .copy-btn {
+            background: none; border: 1px solid #333; color: #ccc; padding: 10px 8px; border-radius: 6px;
+            font-size: 12px; font-weight: bold; cursor: pointer; flex: 1; min-width: 90px;
+        }
+        body.light .copy-btn { border-color: #ccc; color: #555; }
+        .motivationCard {
+            background-color: #1f1f1f; padding: 16px; border-radius: 8px; margin-bottom: 14px;
+            border: 1px solid #333; border-left: 3px solid #ffb400;
+        }
+        body.light .motivationCard { background-color: #fff; border-color: #ddd; border-left-color: #ffb400; }
     </style>
 </head>
 <body>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+    <div class="toast" id="toast">Link copied!</div>
 
     <div style="background-color: #ff3366; color: #ffffff; padding: 6px 0; font-size: 13px; font-weight: bold; overflow: hidden; white-space: nowrap;">
         <marquee behavior="scroll" direction="left" scrollamount="6">
@@ -193,6 +222,69 @@
                 coverage here as the genre keeps growing.
             </p>
         </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">💪 Motivation for the Culture</h2>
+        <p style="color: #999; font-size: 13px; margin-top: -8px; margin-bottom: 16px;">Real talk for the next generation of Naija hustlers, creators, and dreamers.</p>
+
+        <div class="motivationCard">
+            <h3 style="margin: 0 0 8px 0; font-size: 16px;">🇳🇬 You Don't Need Japa to Win</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">
+                Leaving Nigeria isn't the only path to a better life, and it's not a shortcut either.
+                Some of the biggest Naija success stories in music, tech, and business built their name
+                right here first, before the world came looking for them. Wherever you are, keep building —
+                your location doesn't decide your ceiling.
+            </p>
+        </div>
+
+        <div class="motivationCard">
+            <h3 style="margin: 0 0 8px 0; font-size: 16px;">🛠️ Skill Over Hype</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">
+                Get-rich-quick schemes and "yahoo yahoo" shortcuts might look tempting online, but they
+                rarely build anything that lasts — and the risks are real. A real skill (coding, design,
+                video editing, trading a craft) compounds over years and can't be taken from you.
+                Invest time in something you can actually get better at.
+            </p>
+        </div>
+
+        <div class="motivationCard">
+            <h3 style="margin: 0 0 8px 0; font-size: 16px;">🌱 Your Struggle Isn't Your Story's End</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">
+                Light bills, exam stress, "when will I blow" pressure — it's a lot, and it's okay to
+                admit that. But where you are right now is a chapter, not the whole book. Small,
+                consistent effort today is what most success stories actually looked like before anyone
+                was watching.
+            </p>
+        </div>
+
+        <div class="motivationCard">
+            <h3 style="margin: 0 0 8px 0; font-size: 16px;">🤝 Community Over Competition</h3>
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0;">
+                Naija Gen Z is one of the most connected, talented generations this country has produced.
+                Support the person next to you instead of only comparing yourself to them online — the
+                friend who makes it can become the door that opens for you too.
+            </p>
+        </div>
+
+        <div class="motivationCard" style="border-color: #00ff88;">
+            <p style="color: #00ff88; font-size: 13px; font-weight: bold; margin: 0 0 6px 0; letter-spacing: 0.5px;">NIGERIAN PROVERB</p>
+            <p style="color: #ddd; font-size: 15px; font-style: italic; line-height: 1.7; margin: 0;">
+                "However long the night, the day is sure to break."
+            </p>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">About Naija Music Hub</h2>
+        <details class="faq-item">
+            <summary>What is Naija Music Hub?</summary>
+            <p>Naija Music Hub is a blog covering Afrobeats, Nigerian gospel, and pop music — with song breakdowns, artist background, and where to stream each track legally.</p>
+        </details>
+        <details class="faq-item">
+            <summary>Do you post full lyrics?</summary>
+            <p>No — we share a short opening line for context and link out to official streaming platforms so artists get proper credit and royalties.</p>
+        </details>
+        <details class="faq-item">
+            <summary>How often is new content added?</summary>
+            <p>New song features and music news are added regularly. Follow our WhatsApp channel above to get notified.</p>
+        </details>
     </div>
 
     <div id="lonelyStreetsScreen" style="padding: 20px; display: none;">
@@ -226,6 +318,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Lonely%20Streets%20Asake%20Jr" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-lonelyStreetsScreen" onclick="toggleLike('lonelyStreetsScreen')">🤍 <span id="likeCount-lonelyStreetsScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('lonelyStreetsScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr" target="_blank">X / Twitter</a>
@@ -268,6 +364,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=The%20Nights%20Avicii" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-theNightsScreen" onclick="toggleLike('theNightsScreen')">🤍 <span id="likeCount-theNightsScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('theNightsScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20The%20Nights%20by%20Avicii%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20The%20Nights%20by%20Avicii" target="_blank">X / Twitter</a>
@@ -310,6 +410,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Billionaire%20Teni" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-billionaireScreen" onclick="toggleLike('billionaireScreen')">🤍 <span id="likeCount-billionaireScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('billionaireScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Billionaire%20by%20Teni%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Billionaire%20by%20Teni" target="_blank">X / Twitter</a>
@@ -351,6 +455,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Higher%20Burna%20Boy" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-higherScreen" onclick="toggleLike('higherScreen')">🤍 <span id="likeCount-higherScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('higherScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Higher%20by%20Burna%20Boy%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Higher%20by%20Burna%20Boy" target="_blank">X / Twitter</a>
@@ -392,6 +500,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Calm%20Down%20Rema" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-calmDownScreen" onclick="toggleLike('calmDownScreen')">🤍 <span id="likeCount-calmDownScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('calmDownScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Calm%20Down%20by%20Rema%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Calm%20Down%20by%20Rema" target="_blank">X / Twitter</a>
@@ -434,6 +546,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Way%20Maker%20Sinach" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-wayMakerScreen" onclick="toggleLike('wayMakerScreen')">🤍 <span id="likeCount-wayMakerScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('wayMakerScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Way%20Maker%20by%20Sinach%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Way%20Maker%20by%20Sinach" target="_blank">X / Twitter</a>
@@ -475,6 +591,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Excess%20Love%20Mercy%20Chinwo" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-excessLoveScreen" onclick="toggleLike('excessLoveScreen')">🤍 <span id="likeCount-excessLoveScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('excessLoveScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo" target="_blank">X / Twitter</a>
@@ -516,6 +636,10 @@
                 <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Nara%20Ada%20Ehi" target="_blank" rel="noopener">🎵 Boomplay</a>
             </div>
 
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-naraScreen" onclick="toggleLike('naraScreen')">🤍 <span id="likeCount-naraScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('naraScreen')">🔗 Copy Link</button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Nara%20by%20Ada%20Ehi%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Nara%20by%20Ada%20Ehi" target="_blank">X / Twitter</a>
@@ -525,19 +649,6 @@
             <a class="related-card" onclick="switchScreen('wayMakerScreen')">🎵 Way Maker — Sinach</a>
             <a class="related-card" onclick="switchScreen('excessLoveScreen')">🎵 Excess Love — Mercy Chinwo</a>
         </div>
-        <h2 style="color: #00ff88; font-size: 22px;">About Naija Music Hub</h2>
-        <details class="faq-item">
-            <summary>What is Naija Music Hub?</summary>
-            <p>Naija Music Hub is a blog covering Afrobeats, Nigerian gospel, and pop music — with song breakdowns, artist background, and where to stream each track legally.</p>
-        </details>
-        <details class="faq-item">
-            <summary>Do you post full lyrics?</summary>
-            <p>No — we share a short opening line for context and link out to official streaming platforms so artists get proper credit and royalties.</p>
-        </details>
-        <details class="faq-item">
-            <summary>How often is new content added?</summary>
-            <p>New song features and music news are added regularly. Follow our WhatsApp channel above to get notified.</p>
-        </details>
     </div>
 
     <script src="https://pl30228811.effectivecpmnetwork.com/f3/18/3c/f3183ce9d4b72878d2927e27e95d20d7.js"></script>
@@ -596,6 +707,95 @@
             body.classList.toggle('light');
             btn.textContent = body.classList.contains('light') ? '☀️ Light' : '🌙 Dark';
         }
+
+        function getLikes() {
+            try {
+                return JSON.parse(localStorage.getItem('nmh_likes') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function initLikes() {
+            var likes = getLikes();
+            allScreens.forEach(function(id) {
+                if (id === 'homeScreen') return;
+                var btn = document.getElementById('like-' + id);
+                var countEl = document.getElementById('likeCount-' + id);
+                if (!btn || !countEl) return;
+                var data = likes[id] || { liked: false, count: 0 };
+                countEl.textContent = data.count;
+                if (data.liked) {
+                    btn.classList.add('liked');
+                    btn.innerHTML = '❤️ <span id="likeCount-' + id + '">' + data.count + '</span>';
+                }
+            });
+        }
+
+        function toggleLike(screenId) {
+            var likes = getLikes();
+            var data = likes[screenId] || { liked: false, count: 0 };
+            var btn = document.getElementById('like-' + screenId);
+
+            if (data.liked) {
+                data.liked = false;
+                data.count = Math.max(0, data.count - 1);
+                btn.classList.remove('liked');
+                btn.innerHTML = '🤍 <span id="likeCount-' + screenId + '">' + data.count + '</span>';
+            } else {
+                data.liked = true;
+                data.count = data.count + 1;
+                btn.classList.add('liked');
+                btn.innerHTML = '❤️ <span id="likeCount-' + screenId + '">' + data.count + '</span>';
+            }
+
+            likes[screenId] = data;
+            try {
+                localStorage.setItem('nmh_likes', JSON.stringify(likes));
+            } catch (e) {}
+        }
+
+        function copyLink(screenId) {
+            var url = window.location.href.split('#')[0] + '#' + screenId;
+            var toast = document.getElementById('toast');
+
+            function showToast() {
+                toast.style.display = 'block';
+                setTimeout(function() { toast.style.display = 'none'; }, 2000);
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(showToast).catch(function() {
+                    fallbackCopy(url);
+                    showToast();
+                });
+            } else {
+                fallbackCopy(url);
+                showToast();
+            }
+        }
+
+        function fallbackCopy(text) {
+            var el = document.createElement('textarea');
+            el.value = text;
+            el.style.position = 'fixed';
+            el.style.opacity = '0';
+            document.body.appendChild(el);
+            el.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(el);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            var btn = document.getElementById('scrollTopBtn');
+            btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+
+        initLikes();
     </script>
 </body>
 </html>
