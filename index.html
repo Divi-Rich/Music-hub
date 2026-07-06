@@ -98,6 +98,66 @@
             border: 1px solid #333; border-left: 3px solid #ffb400;
         }
         body.light .motivationCard { background-color: #fff; border-color: #ddd; border-left-color: #ffb400; }
+        .reaction-row { display: flex; gap: 8px; margin: 10px 0; }
+        .reaction-btn {
+            background: #1f1f1f; border: 1px solid #333; color: #ccc; padding: 8px 12px; border-radius: 20px;
+            font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+        }
+        body.light .reaction-btn { background: #fff; border-color: #ccc; color: #333; }
+        .read-time { color: #888; font-size: 12px; margin: 0 0 4px 0; }
+        body.light .read-time { color: #777; }
+        .surprise-btn {
+            width: 100%; background: linear-gradient(135deg, #ff3366, #ff6b6b); color: #fff; border: none;
+            padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer;
+            margin-bottom: 18px;
+        }
+        .request-box {
+            background-color: #1f1f1f; border: 1px solid #333; border-radius: 8px; padding: 16px; margin-bottom: 20px;
+        }
+        body.light .request-box { background-color: #fff; border-color: #ddd; }
+        .request-input {
+            width: 100%; padding: 10px; background-color: #161616; border: 1px solid #333; color: #fff;
+            border-radius: 6px; font-size: 14px; margin-bottom: 10px; box-sizing: border-box;
+        }
+        body.light .request-input { background-color: #f4f4f4; color: #111; border-color: #ccc; }
+        .request-btn {
+            width: 100%; background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 6px;
+            font-weight: bold; font-size: 13px; cursor: pointer;
+        }
+        .streak-badge {
+            background: #1f1f1f; border: 1px solid #ff3366; color: #ff6b6b; padding: 6px 12px;
+            border-radius: 20px; font-size: 12px; font-weight: bold;
+        }
+        body.light .streak-badge { background: #fff; border-color: #ff3366; color: #ff3366; }
+        .genz-section { margin: 20px 0 30px 0; }
+        .quiz-card, .poll-card, .recap-card, .countdown-box {
+            background-color: #1f1f1f; border: 1px solid #333; border-radius: 10px; padding: 18px; margin-bottom: 16px;
+        }
+        body.light .quiz-card, body.light .poll-card, body.light .recap-card, body.light .countdown-box {
+            background-color: #fff; border-color: #ddd;
+        }
+        .quiz-option {
+            display: block; width: 100%; text-align: left; background: #161616; border: 1px solid #333;
+            color: #ddd; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; cursor: pointer;
+        }
+        .quiz-option:active, .quiz-option.selected { border-color: #00ff88; background: rgba(0,255,136,0.1); }
+        body.light .quiz-option { background: #f4f4f4; color: #222; border-color: #ccc; }
+        .quiz-result {
+            background: linear-gradient(135deg, #00ff88, #00cc6e); color: #000; border-radius: 8px;
+            padding: 16px; text-align: center; font-weight: bold; margin-top: 10px; display: none;
+        }
+        .poll-options { display: flex; gap: 10px; margin: 12px 0; }
+        .poll-option {
+            flex: 1; background: #161616; border: 1px solid #333; color: #ddd; padding: 14px 8px;
+            border-radius: 8px; text-align: center; font-size: 13px; font-weight: bold; cursor: pointer;
+        }
+        body.light .poll-option { background: #f4f4f4; color: #222; border-color: #ccc; }
+        .poll-bar-track { background: #161616; border-radius: 6px; overflow: hidden; height: 10px; margin: 4px 0; }
+        body.light .poll-bar-track { background: #eee; }
+        .poll-bar-fill { background: #00ff88; height: 100%; width: 0%; transition: width 0.4s; }
+        .countdown-timer { font-size: 26px; font-weight: bold; color: #00ff88; text-align: center; margin: 8px 0; }
+        .recap-line { font-size: 14px; color: #ddd; line-height: 1.8; margin: 4px 0; }
+        body.light .recap-line { color: #333; }
     </style>
 </head>
 <body>
@@ -112,7 +172,7 @@
     </div>
 
     <div class="top-bar">
-        <span style="font-size: 12px; color: #888;">🌗 Theme</span>
+        <span class="streak-badge" id="streakBadge">🔥 Day 1</span>
         <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
     </div>
 
@@ -131,6 +191,8 @@
             <h3 style="margin: 0 0 2px 0; font-size: 18px;">Way Maker</h3>
             <p style="margin: 0; font-size: 13px; color: #ccc;">By Sinach — tap to read the story behind it</p>
         </div>
+
+        <button class="surprise-btn" onclick="surpriseMe()">🎲 Surprise Me — Random Song</button>
 
         <div class="tab-row" id="tabRow">
             <button class="tab-btn active" onclick="filterGenre('all', this)">All</button>
@@ -192,6 +254,27 @@
             <button onclick="switchScreen('naraScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
+        <div class="songCard" data-name="rush ayra starr" data-genre="afrobeats">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Rush</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Ayra Starr</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('rushScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="bandana fireboy asake" data-genre="afrobeats">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Bandana</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Fireboy DML ft. Asake</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('bandanaScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="very good god nathaniel bassey" data-genre="gospel">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Very Good God</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Nathaniel Bassey</p>
+            <p class="genre-tag">🙏 Gospel</p>
+            <button onclick="switchScreen('veryGoodGodScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
         <div style="margin-bottom: 20px;">
             <script async="async" data-cfasync="false" src="https://pl30228810.effectivecpmnetwork.com/75bd410bc64c392dac702627dd14d43f/invoke.js"></script>
             <div id="container-75bd410bc64c392dac702627dd14d43f"></div>
@@ -201,6 +284,19 @@
             <p style="margin: 0 0 10px 0; font-weight: bold; color: #00ff88;">📲 Never Miss a Drop</p>
             <p style="margin: 0 0 12px 0; font-size: 13px; color: #ccc;">Follow for new song breakdowns and Naija music news as it happens.</p>
             <a href="#" style="display: inline-block; background: #00ff88; color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 13px;">Follow on WhatsApp Channel</a>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🎤 Request a Song</h2>
+        <div class="request-box">
+            <p style="color: #ccc; font-size: 13px; margin: 0 0 10px 0;">Want us to feature a song? Type it below and send it straight to us.</p>
+            <input type="text" id="requestInput" class="request-input" placeholder="e.g. Love Damini - Burna Boy">
+            <button class="request-btn" onclick="requestSong()">Send Request via WhatsApp</button>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">💬 Community Chat</h2>
+        <p style="color: #999; font-size: 13px; margin-top: -8px; margin-bottom: 12px;">Talk music, share your favorite songs, and connect with other visitors — public chat, be respectful.</p>
+        <div style="border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333;">
+            <iframe src="https://www5.cbox.ws/box/?boxid=964494&boxtag=TRACco" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
         </div>
 
         <h2 style="color: #00ff88; font-size: 22px;">Music News</h2>
@@ -272,6 +368,67 @@
             </p>
         </div>
 
+        <div class="genz-section">
+            <h2 style="color: #00ff88; font-size: 22px;">🎮 Gen Z Zone</h2>
+            <p style="color: #999; font-size: 13px; margin-top: -8px; margin-bottom: 16px;">Quizzes, polls, and countdowns — just for fun.</p>
+
+            <div class="countdown-box">
+                <p style="margin: 0; text-align:center; color: #00ff88; font-weight: bold; font-size: 13px; letter-spacing: 0.5px;">⏳ NEXT SONG DROP IN</p>
+                <div class="countdown-timer" id="countdownTimer">--:--:--</div>
+            </div>
+
+            <div class="quiz-card">
+                <h3 style="margin: 0 0 4px 0; font-size: 16px; color: #00ff88;">🎧 Vibe Check: What's Your Naija Music Personality?</h3>
+                <p style="font-size: 13px; color: #999; margin: 0 0 14px 0;">Answer 3 quick questions to find out.</p>
+
+                <div id="quizQ1">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">1. Saturday night, you're...</p>
+                    <button class="quiz-option" onclick="answerQuiz(1,'afrobeats')">At a party, dancing all night</button>
+                    <button class="quiz-option" onclick="answerQuiz(1,'gospel')">At a worship night with friends</button>
+                    <button class="quiz-option" onclick="answerQuiz(1,'pop')">Chilling with headphones on</button>
+                </div>
+
+                <div id="quizQ2" style="display:none;">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">2. Pick a mood:</p>
+                    <button class="quiz-option" onclick="answerQuiz(2,'afrobeats')">Confident and hyped</button>
+                    <button class="quiz-option" onclick="answerQuiz(2,'gospel')">Grateful and reflective</button>
+                    <button class="quiz-option" onclick="answerQuiz(2,'pop')">Dreamy and nostalgic</button>
+                </div>
+
+                <div id="quizQ3" style="display:none;">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">3. Your ideal song does what?</p>
+                    <button class="quiz-option" onclick="answerQuiz(3,'afrobeats')">Makes you move</button>
+                    <button class="quiz-option" onclick="answerQuiz(3,'gospel')">Lifts your spirit</button>
+                    <button class="quiz-option" onclick="answerQuiz(3,'pop')">Hits your feelings</button>
+                </div>
+
+                <div class="quiz-result" id="quizResult"></div>
+            </div>
+
+            <div class="poll-card">
+                <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #00ff88;">⚡ This or That</h3>
+                <p style="font-size: 14px; color: #ddd; margin: 0 0 10px 0;">Which one hits harder?</p>
+                <div class="poll-options">
+                    <button class="poll-option" onclick="castVote('a')">Rush<br><span style="font-weight:normal; color:#999;">Ayra Starr</span></button>
+                    <button class="poll-option" onclick="castVote('b')">Calm Down<br><span style="font-weight:normal; color:#999;">Rema</span></button>
+                </div>
+                <div id="pollResults" style="display:none;">
+                    <p style="font-size: 12px; color: #999; margin: 8px 0 2px 0;">Rush — <span id="pollPctA">0</span>%</p>
+                    <div class="poll-bar-track"><div class="poll-bar-fill" id="pollBarA"></div></div>
+                    <p style="font-size: 12px; color: #999; margin: 8px 0 2px 0;">Calm Down — <span id="pollPctB">0</span>%</p>
+                    <div class="poll-bar-track"><div class="poll-bar-fill" id="pollBarB"></div></div>
+                </div>
+            </div>
+
+            <div class="recap-card">
+                <h3 style="margin: 0 0 10px 0; font-size: 16px; color: #00ff88;">📊 Your Naija Music Hub Recap</h3>
+                <p class="recap-line" id="recapLikes">❤️ Songs liked: 0</p>
+                <p class="recap-line" id="recapReactions">🔥 Reactions given: 0</p>
+                <p class="recap-line" id="recapStreak">📅 Visit streak: 1 day</p>
+                <button class="request-btn" style="margin-top: 10px;" onclick="copyRecap()">📋 Copy My Recap to Share</button>
+            </div>
+        </div>
+
         <h2 style="color: #00ff88; font-size: 22px;">About Naija Music Hub</h2>
         <details class="faq-item">
             <summary>What is Naija Music Hub?</summary>
@@ -291,6 +448,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Lonely Streets</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Asake Jr</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
@@ -322,6 +480,11 @@
                 <button class="like-btn" id="like-lonelyStreetsScreen" onclick="toggleLike('lonelyStreetsScreen')">🤍 <span id="likeCount-lonelyStreetsScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('lonelyStreetsScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('lonelyStreetsScreen','fire')">🔥 <span id="reaction-lonelyStreetsScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('lonelyStreetsScreen','love')">😍 <span id="reaction-lonelyStreetsScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('lonelyStreetsScreen','pray')">🙏 <span id="reaction-lonelyStreetsScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Lonely%20Streets%20by%20Asake%20Jr" target="_blank">X / Twitter</a>
@@ -337,6 +500,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">The Nights</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Avicii</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
@@ -368,6 +532,11 @@
                 <button class="like-btn" id="like-theNightsScreen" onclick="toggleLike('theNightsScreen')">🤍 <span id="likeCount-theNightsScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('theNightsScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('theNightsScreen','fire')">🔥 <span id="reaction-theNightsScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('theNightsScreen','love')">😍 <span id="reaction-theNightsScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('theNightsScreen','pray')">🙏 <span id="reaction-theNightsScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20The%20Nights%20by%20Avicii%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20The%20Nights%20by%20Avicii" target="_blank">X / Twitter</a>
@@ -383,6 +552,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Billionaire</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Teni</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
@@ -414,6 +584,11 @@
                 <button class="like-btn" id="like-billionaireScreen" onclick="toggleLike('billionaireScreen')">🤍 <span id="likeCount-billionaireScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('billionaireScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('billionaireScreen','fire')">🔥 <span id="reaction-billionaireScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('billionaireScreen','love')">😍 <span id="reaction-billionaireScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('billionaireScreen','pray')">🙏 <span id="reaction-billionaireScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Billionaire%20by%20Teni%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Billionaire%20by%20Teni" target="_blank">X / Twitter</a>
@@ -429,6 +604,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Higher</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Burna Boy</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
@@ -459,6 +635,11 @@
                 <button class="like-btn" id="like-higherScreen" onclick="toggleLike('higherScreen')">🤍 <span id="likeCount-higherScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('higherScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('higherScreen','fire')">🔥 <span id="reaction-higherScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('higherScreen','love')">😍 <span id="reaction-higherScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('higherScreen','pray')">🙏 <span id="reaction-higherScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Higher%20by%20Burna%20Boy%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Higher%20by%20Burna%20Boy" target="_blank">X / Twitter</a>
@@ -474,6 +655,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Calm Down</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Rema</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
@@ -504,6 +686,11 @@
                 <button class="like-btn" id="like-calmDownScreen" onclick="toggleLike('calmDownScreen')">🤍 <span id="likeCount-calmDownScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('calmDownScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('calmDownScreen','fire')">🔥 <span id="reaction-calmDownScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('calmDownScreen','love')">😍 <span id="reaction-calmDownScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('calmDownScreen','pray')">🙏 <span id="reaction-calmDownScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Calm%20Down%20by%20Rema%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Calm%20Down%20by%20Rema" target="_blank">X / Twitter</a>
@@ -519,6 +706,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Way Maker</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Sinach</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Opening line:</p>
@@ -550,6 +738,11 @@
                 <button class="like-btn" id="like-wayMakerScreen" onclick="toggleLike('wayMakerScreen')">🤍 <span id="likeCount-wayMakerScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('wayMakerScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('wayMakerScreen','fire')">🔥 <span id="reaction-wayMakerScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('wayMakerScreen','love')">😍 <span id="reaction-wayMakerScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('wayMakerScreen','pray')">🙏 <span id="reaction-wayMakerScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Way%20Maker%20by%20Sinach%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Way%20Maker%20by%20Sinach" target="_blank">X / Twitter</a>
@@ -565,6 +758,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Excess Love</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Mercy Chinwo</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
@@ -595,6 +789,11 @@
                 <button class="like-btn" id="like-excessLoveScreen" onclick="toggleLike('excessLoveScreen')">🤍 <span id="likeCount-excessLoveScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('excessLoveScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('excessLoveScreen','fire')">🔥 <span id="reaction-excessLoveScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('excessLoveScreen','love')">😍 <span id="reaction-excessLoveScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('excessLoveScreen','pray')">🙏 <span id="reaction-excessLoveScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Excess%20Love%20by%20Mercy%20Chinwo" target="_blank">X / Twitter</a>
@@ -610,6 +809,7 @@
         <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
         <div class="songCard">
             <h2 style="color: #00ff88; margin-top: 0;">Nara</h2>
+            <p class="read-time">⏱ 2 min read</p>
             <p style="color: #aaa; font-style: italic; margin-top: 0;">By Ada Ehi</p>
 
             <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
@@ -640,9 +840,170 @@
                 <button class="like-btn" id="like-naraScreen" onclick="toggleLike('naraScreen')">🤍 <span id="likeCount-naraScreen">0</span></button>
                 <button class="copy-btn" onclick="copyLink('naraScreen')">🔗 Copy Link</button>
             </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('naraScreen','fire')">🔥 <span id="reaction-naraScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('naraScreen','love')">😍 <span id="reaction-naraScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('naraScreen','pray')">🙏 <span id="reaction-naraScreen-pray">0</span></button>
+            </div>
             <div class="share-row">
                 <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Nara%20by%20Ada%20Ehi%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
                 <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Nara%20by%20Ada%20Ehi" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('wayMakerScreen')">🎵 Way Maker — Sinach</a>
+            <a class="related-card" onclick="switchScreen('excessLoveScreen')">🎵 Excess Love — Mercy Chinwo</a>
+        </div>
+    </div>
+
+    <div id="rushScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Rush</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Ayra Starr</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A bold, self-assured dance record built around confidence and owning your moment.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Ayra Starr has quickly become one of the standout voices in the newer generation of Afrobeats
+                artists, known for blending sharp pop hooks with a distinctly Naija swagger. This track leans
+                into that energy — upbeat, danceable, and centered on self-belief, which has become something
+                of a signature theme across her catalogue. It's the kind of record built for parties and for
+                walking into a room like you own it.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Rush Ayra Starr" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Rush%20Ayra%20Starr" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Rush%20Ayra%20Starr" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Rush%20Ayra%20Starr" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-rushScreen" onclick="toggleLike('rushScreen')">🤍 <span id="likeCount-rushScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('rushScreen')">🔗 Copy Link</button>
+            </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('rushScreen','fire')">🔥 <span id="reaction-rushScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('rushScreen','love')">😍 <span id="reaction-rushScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('rushScreen','pray')">🙏 <span id="reaction-rushScreen-pray">0</span></button>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Rush%20by%20Ayra%20Starr%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Rush%20by%20Ayra%20Starr" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('bandanaScreen')">🎵 Bandana — Fireboy DML ft. Asake</a>
+            <a class="related-card" onclick="switchScreen('calmDownScreen')">🎵 Calm Down — Rema</a>
+        </div>
+    </div>
+
+    <div id="bandanaScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Bandana</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Fireboy DML ft. Asake</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A smooth, melodic collaboration blending two distinct Afrobeats vocal styles into one catchy record.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Fireboy DML built his name on soulful, melodic songwriting, while Asake brought a looser,
+                street-hymn energy that took off fast in the Afrobeats scene. Pairing the two on one track
+                plays to both their strengths — a smooth verse trade-off that captures why collaborations
+                between contrasting Naija artists tend to work so well, giving listeners two flavors in one
+                song.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Bandana Fireboy DML Asake" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Bandana%20Fireboy%20DML%20Asake" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Bandana%20Fireboy%20DML%20Asake" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Bandana%20Fireboy%20DML%20Asake" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-bandanaScreen" onclick="toggleLike('bandanaScreen')">🤍 <span id="likeCount-bandanaScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('bandanaScreen')">🔗 Copy Link</button>
+            </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('bandanaScreen','fire')">🔥 <span id="reaction-bandanaScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('bandanaScreen','love')">😍 <span id="reaction-bandanaScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('bandanaScreen','pray')">🙏 <span id="reaction-bandanaScreen-pray">0</span></button>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Bandana%20by%20Fireboy%20DML%20ft%20Asake%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Bandana%20by%20Fireboy%20DML%20ft%20Asake" target="_blank">X / Twitter</a>
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('rushScreen')">🎵 Rush — Ayra Starr</a>
+            <a class="related-card" onclick="switchScreen('higherScreen')">🎵 Higher — Burna Boy</a>
+        </div>
+    </div>
+
+    <div id="veryGoodGodScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Very Good God</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Nathaniel Bassey</p>
+
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A joyful, trumpet-led praise anthem built for full-volume congregational worship.
+            </div>
+
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Nathaniel Bassey is known across Nigerian gospel circles as much for his trumpet playing as
+                his voice, and his praise-heavy worship style has made him a fixture at major gospel concerts
+                and his own "Hallelujah Challenge" gatherings. This track carries that same celebratory,
+                horn-driven energy — the kind of song built less for quiet reflection and more for a packed
+                room raising their hands together.
+            </p>
+
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Very Good God Nathaniel Bassey" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Very%20Good%20God%20Nathaniel%20Bassey" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Very%20Good%20God%20Nathaniel%20Bassey" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Very%20Good%20God%20Nathaniel%20Bassey" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-veryGoodGodScreen" onclick="toggleLike('veryGoodGodScreen')">🤍 <span id="likeCount-veryGoodGodScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('veryGoodGodScreen')">🔗 Copy Link</button>
+            </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','fire')">🔥 <span id="reaction-veryGoodGodScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','love')">😍 <span id="reaction-veryGoodGodScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','pray')">🙏 <span id="reaction-veryGoodGodScreen-pray">0</span></button>
+            </div>
+
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Very%20Good%20God%20by%20Nathaniel%20Bassey%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Very%20Good%20God%20by%20Nathaniel%20Bassey" target="_blank">X / Twitter</a>
             </div>
 
             <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
@@ -665,7 +1026,8 @@
     <script>
         var allScreens = [
             'homeScreen','lonelyStreetsScreen','theNightsScreen','billionaireScreen',
-            'higherScreen','calmDownScreen','wayMakerScreen','excessLoveScreen','naraScreen'
+            'higherScreen','calmDownScreen','wayMakerScreen','excessLoveScreen','naraScreen',
+            'rushScreen','bandanaScreen','veryGoodGodScreen'
         ];
 
         function switchScreen(screenId) {
@@ -795,7 +1157,202 @@
             btn.style.display = window.scrollY > 300 ? 'block' : 'none';
         });
 
+        function surpriseMe() {
+            var songScreens = allScreens.filter(function(id) { return id !== 'homeScreen'; });
+            var pick = songScreens[Math.floor(Math.random() * songScreens.length)];
+            switchScreen(pick);
+        }
+
+        function requestSong() {
+            var input = document.getElementById('requestInput');
+            var value = input.value.trim();
+            if (!value) {
+                input.focus();
+                return;
+            }
+            var text = encodeURIComponent('Hi! I would love to see this song featured on Naija Music Hub: ' + value);
+            window.open('https://wa.me/?text=' + text, '_blank');
+            input.value = '';
+        }
+
+        function getReactions() {
+            try {
+                return JSON.parse(localStorage.getItem('nmh_reactions') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function initReactions() {
+            var reactions = getReactions();
+            allScreens.forEach(function(id) {
+                if (id === 'homeScreen') return;
+                ['fire', 'love', 'pray'].forEach(function(emoji) {
+                    var el = document.getElementById('reaction-' + id + '-' + emoji);
+                    if (!el) return;
+                    var key = id + '-' + emoji;
+                    el.textContent = reactions[key] || 0;
+                });
+            });
+        }
+
+        function reactToSong(screenId, emoji) {
+            var reactions = getReactions();
+            var key = screenId + '-' + emoji;
+            reactions[key] = (reactions[key] || 0) + 1;
+            try {
+                localStorage.setItem('nmh_reactions', JSON.stringify(reactions));
+            } catch (e) {}
+            var el = document.getElementById('reaction-' + screenId + '-' + emoji);
+            if (el) el.textContent = reactions[key];
+        }
+
+        var quizScores = { afrobeats: 0, gospel: 0, pop: 0 };
+        function answerQuiz(qNum, genre) {
+            quizScores[genre]++;
+            document.getElementById('quizQ' + qNum).style.display = 'none';
+            if (qNum < 3) {
+                document.getElementById('quizQ' + (qNum + 1)).style.display = 'block';
+            } else {
+                var top = 'afrobeats';
+                if (quizScores.gospel >= quizScores[top] && quizScores.gospel >= quizScores.pop) top = 'gospel';
+                else if (quizScores.pop >= quizScores[top] && quizScores.pop >= quizScores.gospel) top = 'pop';
+
+                var results = {
+                    afrobeats: { label: '🔥 The Afrobeats Spirit', desc: 'You bring the energy everywhere you go. Party starter, confident, always moving.' },
+                    gospel: { label: '🙏 The Worship Soul', desc: 'You lead with gratitude and grounded faith. People feel calm around you.' },
+                    pop: { label: '🎧 The Dreamer', desc: 'Reflective and melodic — you feel music deeply and vibe your own way.' }
+                };
+                var r = results[top];
+                var resultBox = document.getElementById('quizResult');
+                resultBox.innerHTML = '<div style="font-size:16px; margin-bottom:6px;">' + r.label + '</div><div style="font-weight:normal; font-size:13px;">' + r.desc + '</div>';
+                resultBox.style.display = 'block';
+            }
+        }
+
+        function getPollVotes() {
+            try {
+                return JSON.parse(localStorage.getItem('nmh_poll_rushvcalm') || '{"a":0,"b":0}');
+            } catch (e) {
+                return { a: 0, b: 0 };
+            }
+        }
+
+        function castVote(choice) {
+            var votes = getPollVotes();
+            votes[choice]++;
+            try {
+                localStorage.setItem('nmh_poll_rushvcalm', JSON.stringify(votes));
+            } catch (e) {}
+            renderPollResults(votes);
+        }
+
+        function renderPollResults(votes) {
+            var total = votes.a + votes.b;
+            var pctA = total > 0 ? Math.round((votes.a / total) * 100) : 0;
+            var pctB = total > 0 ? Math.round((votes.b / total) * 100) : 0;
+            document.getElementById('pollPctA').textContent = pctA;
+            document.getElementById('pollPctB').textContent = pctB;
+            document.getElementById('pollBarA').style.width = pctA + '%';
+            document.getElementById('pollBarB').style.width = pctB + '%';
+            document.getElementById('pollResults').style.display = 'block';
+        }
+
+        function initPoll() {
+            var votes = getPollVotes();
+            if (votes.a > 0 || votes.b > 0) renderPollResults(votes);
+        }
+
+        function updateCountdown() {
+            var now = new Date();
+            var target = new Date();
+            target.setHours(18, 0, 0, 0);
+            var daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            target.setDate(now.getDate() + daysUntilFriday);
+            if (daysUntilFriday === 0 && now > target) {
+                target.setDate(target.getDate() + 7);
+            }
+            var diff = target - now;
+            var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            var m = Math.floor((diff / (1000 * 60)) % 60);
+            var s = Math.floor((diff / 1000) % 60);
+            var el = document.getElementById('countdownTimer');
+            if (el) el.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
+        }
+
+        function initStreak() {
+            var today = new Date().toISOString().slice(0, 10);
+            var data;
+            try {
+                data = JSON.parse(localStorage.getItem('nmh_streak') || '{}');
+            } catch (e) {
+                data = {};
+            }
+            if (!data.lastVisit) {
+                data = { lastVisit: today, streak: 1 };
+            } else if (data.lastVisit !== today) {
+                var last = new Date(data.lastVisit);
+                var now = new Date(today);
+                var diffDays = Math.round((now - last) / (1000 * 60 * 60 * 24));
+                data.streak = diffDays === 1 ? (data.streak || 1) + 1 : 1;
+                data.lastVisit = today;
+            }
+            try {
+                localStorage.setItem('nmh_streak', JSON.stringify(data));
+            } catch (e) {}
+            var badge = document.getElementById('streakBadge');
+            if (badge) badge.textContent = '🔥 Day ' + data.streak;
+            var recapStreak = document.getElementById('recapStreak');
+            if (recapStreak) recapStreak.textContent = '📅 Visit streak: ' + data.streak + ' day' + (data.streak === 1 ? '' : 's');
+            return data.streak;
+        }
+
+        function initRecap() {
+            var likes = getLikes();
+            var reactions = getReactions();
+            var likeCount = 0;
+            Object.keys(likes).forEach(function(k) { if (likes[k].liked) likeCount++; });
+            var reactionCount = 0;
+            Object.keys(reactions).forEach(function(k) { reactionCount += reactions[k]; });
+
+            var likesEl = document.getElementById('recapLikes');
+            var reactionsEl = document.getElementById('recapReactions');
+            if (likesEl) likesEl.textContent = '❤️ Songs liked: ' + likeCount;
+            if (reactionsEl) reactionsEl.textContent = '🔥 Reactions given: ' + reactionCount;
+        }
+
+        function copyRecap() {
+            var likesEl = document.getElementById('recapLikes');
+            var reactionsEl = document.getElementById('recapReactions');
+            var streakEl = document.getElementById('recapStreak');
+            var text = 'My Naija Music Hub Recap 🎧\n' + likesEl.textContent + '\n' + reactionsEl.textContent + '\n' + streakEl.textContent + '\nCheck it out: ' + window.location.href.split('#')[0];
+            var toast = document.getElementById('toast');
+
+            function showToast() {
+                toast.textContent = 'Recap copied!';
+                toast.style.display = 'block';
+                setTimeout(function() { toast.style.display = 'none'; toast.textContent = 'Link copied!'; }, 2000);
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(showToast).catch(function() {
+                    fallbackCopy(text);
+                    showToast();
+                });
+            } else {
+                fallbackCopy(text);
+                showToast();
+            }
+        }
+
         initLikes();
+        initReactions();
+        initStreak();
+        initRecap();
+        initPoll();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
