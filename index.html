@@ -158,6 +158,41 @@
         .countdown-timer { font-size: 26px; font-weight: bold; color: #00ff88; text-align: center; margin: 8px 0; }
         .recap-line { font-size: 14px; color: #ddd; line-height: 1.8; margin: 4px 0; }
         body.light .recap-line { color: #333; }
+        .artist-chip {
+            display: inline-block; background: #1f1f1f; border: 1px solid #333; color: #ccc;
+            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer;
+            margin: 0 8px 8px 0;
+        }
+        .artist-chip.active { background: #00ff88; color: #000; border-color: #00ff88; }
+        body.light .artist-chip { background: #fff; border-color: #ccc; color: #333; }
+        .artist-bio-box {
+            background-color: #1f1f1f; border: 1px solid #333; border-radius: 8px; padding: 14px;
+            margin-bottom: 14px; display: none;
+        }
+        body.light .artist-bio-box { background-color: #fff; border-color: #ddd; }
+        .badge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .badge-item {
+            background: #161616; border: 1px solid #333; border-radius: 8px; padding: 12px; text-align: center;
+            opacity: 0.35;
+        }
+        .badge-item.earned { opacity: 1; border-color: #00ff88; background: rgba(0,255,136,0.08); }
+        body.light .badge-item { background: #f4f4f4; border-color: #ccc; }
+        body.light .badge-item.earned { background: rgba(0,255,136,0.1); border-color: #00ff88; }
+        .badge-emoji { font-size: 24px; display: block; margin-bottom: 4px; }
+        .badge-label { font-size: 11px; font-weight: bold; color: #ccc; }
+        body.light .badge-label { color: #333; }
+        .pwa-banner {
+            background: linear-gradient(135deg, #1f1f1f, #14261e); border: 1px solid #00ff88; border-radius: 8px;
+            padding: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+        }
+        body.light .pwa-banner { background: linear-gradient(135deg, #fff, #e9fff5); }
+        .pwa-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; padding: 0 4px; }
+        .chart-item {
+            display: flex; align-items: center; gap: 12px; background-color: #1f1f1f; border: 1px solid #333;
+            border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; cursor: pointer;
+        }
+        body.light .chart-item { background-color: #fff; border-color: #ddd; }
+        .chart-rank { font-size: 20px; font-weight: bold; color: #00ff88; min-width: 28px; }
     </style>
 </head>
 <body>
@@ -182,6 +217,11 @@
     </header>
 
     <div id="homeScreen" style="padding: 20px; display: block;">
+        <div class="pwa-banner" id="pwaBanner">
+            <p style="margin: 0; font-size: 13px; color: #ccc;">📱 <strong style="color:#00ff88;">Add to Home Screen</strong> — tap your browser menu → "Add to Home Screen" for quick access, like an app.</p>
+            <button class="pwa-close" onclick="dismissPwaBanner()">✕</button>
+        </div>
+
         <div style="margin-bottom: 15px;">
             <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="🔍 Search for songs or artists..." style="width: 100%; padding: 12px; background-color: #1f1f1f; border: 1px solid #333; color: white; border-radius: 8px; font-size: 14px;">
         </div>
@@ -190,6 +230,12 @@
             <p style="margin: 0 0 4px 0; font-size: 11px; font-weight: bold; color: #00ff88; letter-spacing: 1px;">🎧 SONG OF THE DAY</p>
             <h3 style="margin: 0 0 2px 0; font-size: 18px;">Way Maker</h3>
             <p style="margin: 0; font-size: 13px; color: #ccc;">By Sinach — tap to read the story behind it</p>
+        </div>
+
+        <div class="spotlight-box" id="throwbackBox" style="background: linear-gradient(135deg, #ff8c00, #ffb400); cursor:pointer;">
+            <p style="margin: 0 0 4px 0; font-size: 11px; font-weight: bold; color: #000; letter-spacing: 1px;">🕰️ THROWBACK PICK</p>
+            <h3 id="throwbackTitle" style="margin: 0 0 2px 0; font-size: 18px; color:#000;">Loading...</h3>
+            <p id="throwbackArtist" style="margin: 0; font-size: 13px; color: #222;"></p>
         </div>
 
         <button class="surprise-btn" onclick="surpriseMe()">🎲 Surprise Me — Random Song</button>
@@ -201,78 +247,127 @@
             <button class="tab-btn" onclick="filterGenre('pop', this)">Pop / Dance</button>
         </div>
 
+        <h2 style="color: #00ff88; font-size: 22px;">🎤 Browse by Artist</h2>
+        <div style="margin-bottom: 10px;">
+            <span class="artist-chip active" onclick="filterByArtist('all', this)">All</span>
+            <span class="artist-chip" onclick="filterByArtist('Asake Jr', this)">Asake Jr</span>
+            <span class="artist-chip" onclick="filterByArtist('Avicii', this)">Avicii</span>
+            <span class="artist-chip" onclick="filterByArtist('Teni', this)">Teni</span>
+            <span class="artist-chip" onclick="filterByArtist('Burna Boy', this)">Burna Boy</span>
+            <span class="artist-chip" onclick="filterByArtist('Rema', this)">Rema</span>
+            <span class="artist-chip" onclick="filterByArtist('Sinach', this)">Sinach</span>
+            <span class="artist-chip" onclick="filterByArtist('Mercy Chinwo', this)">Mercy Chinwo</span>
+            <span class="artist-chip" onclick="filterByArtist('Ada Ehi', this)">Ada Ehi</span>
+            <span class="artist-chip" onclick="filterByArtist('Ayra Starr', this)">Ayra Starr</span>
+            <span class="artist-chip" onclick="filterByArtist('Fireboy DML', this)">Fireboy DML</span>
+            <span class="artist-chip" onclick="filterByArtist('Nathaniel Bassey', this)">Nathaniel Bassey</span>
+            <span class="artist-chip" onclick="filterByArtist('Asake', this)">Asake</span>
+            <span class="artist-chip" onclick="filterByArtist('BNXN', this)">BNXN</span>
+            <span class="artist-chip" onclick="filterByArtist('Young Jonn', this)">Young Jonn</span>
+        </div>
+        <div class="artist-bio-box" id="artistBioBox"></div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🎭 Filter by Mood</h2>
+        <div style="margin-bottom: 16px;">
+            <span class="artist-chip active" onclick="filterByMood('all', this)">All Moods</span>
+            <span class="artist-chip" onclick="filterByMood('hype', this)">⚡ Hype</span>
+            <span class="artist-chip" onclick="filterByMood('chill', this)">😌 Chill</span>
+            <span class="artist-chip" onclick="filterByMood('worship', this)">🙏 Worship</span>
+        </div>
+
         <h2 style="color: #00ff88; font-size: 22px; margin-top: 0;">Trending Songs</h2>
 
-        <div class="songCard" data-name="lonely streets asake jr" data-genre="afrobeats">
+        <div class="songCard" data-name="lonely streets asake jr" data-genre="afrobeats" data-artist="Asake Jr" data-mood="chill">
             <h3 style="margin: 0 0 4px 0;">Lonely Streets</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Asake Jr</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('lonelyStreetsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="the nights avicii" data-genre="pop">
+        <div class="songCard" data-name="the nights avicii" data-genre="pop" data-artist="Avicii" data-mood="hype">
             <h3 style="margin: 0 0 4px 0;">The Nights</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Avicii</p>
             <p class="genre-tag">🎧 Pop / Dance</p>
             <button onclick="switchScreen('theNightsScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="billionaire teni" data-genre="afrobeats">
+        <div class="songCard" data-name="billionaire teni" data-genre="afrobeats" data-artist="Teni" data-mood="hype">
             <span class="badge">🔥 HOT</span>
             <h3 style="margin: 0 0 4px 0;">Billionaire</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Teni</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('billionaireScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="higher burna boy" data-genre="afrobeats">
+        <div class="songCard" data-name="higher burna boy" data-genre="afrobeats" data-artist="Burna Boy" data-mood="hype">
             <span class="badge">🔥 HOT</span>
             <h3 style="margin: 0 0 4px 0;">Higher</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Burna Boy</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('higherScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="calm down rema" data-genre="afrobeats">
+        <div class="songCard" data-name="calm down rema" data-genre="afrobeats" data-artist="Rema" data-mood="chill">
             <h3 style="margin: 0 0 4px 0;">Calm Down</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Rema</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('calmDownScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="way maker sinach" data-genre="gospel">
+        <div class="songCard" data-name="way maker sinach" data-genre="gospel" data-artist="Sinach" data-mood="worship">
             <span class="badge">✨ NEW</span>
             <h3 style="margin: 0 0 4px 0;">Way Maker</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Sinach</p>
             <p class="genre-tag">🙏 Gospel</p>
             <button onclick="switchScreen('wayMakerScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="excess love mercy chinwo" data-genre="gospel">
+        <div class="songCard" data-name="excess love mercy chinwo" data-genre="gospel" data-artist="Mercy Chinwo" data-mood="worship">
             <h3 style="margin: 0 0 4px 0;">Excess Love</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Mercy Chinwo</p>
             <p class="genre-tag">🙏 Gospel</p>
             <button onclick="switchScreen('excessLoveScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="nara ada ehi" data-genre="gospel">
+        <div class="songCard" data-name="nara ada ehi" data-genre="gospel" data-artist="Ada Ehi" data-mood="worship">
             <h3 style="margin: 0 0 4px 0;">Nara</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Ada Ehi</p>
             <p class="genre-tag">🙏 Gospel</p>
             <button onclick="switchScreen('naraScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="rush ayra starr" data-genre="afrobeats">
+        <div class="songCard" data-name="rush ayra starr" data-genre="afrobeats" data-artist="Ayra Starr" data-mood="hype">
             <span class="badge">✨ NEW</span>
             <h3 style="margin: 0 0 4px 0;">Rush</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Ayra Starr</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('rushScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="bandana fireboy asake" data-genre="afrobeats">
+        <div class="songCard" data-name="bandana fireboy asake" data-genre="afrobeats" data-artist="Fireboy DML" data-mood="chill">
             <span class="badge">✨ NEW</span>
             <h3 style="margin: 0 0 4px 0;">Bandana</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Fireboy DML ft. Asake</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('bandanaScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
-        <div class="songCard" data-name="very good god nathaniel bassey" data-genre="gospel">
+        <div class="songCard" data-name="very good god nathaniel bassey" data-genre="gospel" data-artist="Nathaniel Bassey" data-mood="worship">
             <span class="badge">✨ NEW</span>
             <h3 style="margin: 0 0 4px 0;">Very Good God</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Nathaniel Bassey</p>
             <p class="genre-tag">🙏 Gospel</p>
             <button onclick="switchScreen('veryGoodGodScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="forgiveness asake" data-genre="afrobeats" data-artist="Asake" data-mood="chill">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Forgiveness</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Asake</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('forgivenessScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="back outside bnxn sarz" data-genre="afrobeats" data-artist="BNXN" data-mood="hype">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Back Outside</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By BNXN & Sarz</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('backOutsideScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="elumelu young jonn" data-genre="afrobeats" data-artist="Young Jonn" data-mood="hype">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Elumelu</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Young Jonn</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('elumeluScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
         <div style="margin-bottom: 20px;">
@@ -283,7 +378,7 @@
         <div class="follow-box">
             <p style="margin: 0 0 10px 0; font-weight: bold; color: #00ff88;">📲 Never Miss a Drop</p>
             <p style="margin: 0 0 12px 0; font-size: 13px; color: #ccc;">Follow for new song breakdowns and Naija music news as it happens.</p>
-            <a href="#" style="display: inline-block; background: #00ff88; color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 13px;">Follow on WhatsApp Channel</a>
+            <a href="https://whatsapp.com/channel/0029Vb8ELm13wtb3LAAILi1w" target="_blank" style="display: inline-block; background: #00ff88; color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 13px;">Follow on WhatsApp Channel</a>
         </div>
 
         <h2 style="color: #00ff88; font-size: 22px;">🎤 Request a Song</h2>
@@ -297,6 +392,30 @@
         <p style="color: #999; font-size: 13px; margin-top: -8px; margin-bottom: 12px;">Talk music, share your favorite songs, and connect with other visitors — public chat, be respectful.</p>
         <div style="border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333;">
             <iframe src="https://www5.cbox.ws/box/?boxid=964494&boxtag=TRACco" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🏆 Naija Music Hub Top 5 This Week</h2>
+        <p style="color: #999; font-size: 13px; margin-top: -8px; margin-bottom: 14px;">Our own editorial picks — not an official chart, just what's got our attention.</p>
+
+        <div class="chart-item" onclick="switchScreen('bandanaScreen')">
+            <span class="chart-rank">1</span>
+            <div><strong>Bandana</strong><br><span style="font-size:13px; color:#999;">Fireboy DML ft. Asake</span></div>
+        </div>
+        <div class="chart-item" onclick="switchScreen('rushScreen')">
+            <span class="chart-rank">2</span>
+            <div><strong>Rush</strong><br><span style="font-size:13px; color:#999;">Ayra Starr</span></div>
+        </div>
+        <div class="chart-item" onclick="switchScreen('calmDownScreen')">
+            <span class="chart-rank">3</span>
+            <div><strong>Calm Down</strong><br><span style="font-size:13px; color:#999;">Rema</span></div>
+        </div>
+        <div class="chart-item" onclick="switchScreen('wayMakerScreen')">
+            <span class="chart-rank">4</span>
+            <div><strong>Way Maker</strong><br><span style="font-size:13px; color:#999;">Sinach</span></div>
+        </div>
+        <div class="chart-item" onclick="switchScreen('higherScreen')">
+            <span class="chart-rank">5</span>
+            <div><strong>Higher</strong><br><span style="font-size:13px; color:#999;">Burna Boy</span></div>
         </div>
 
         <h2 style="color: #00ff88; font-size: 22px;">Music News</h2>
@@ -420,12 +539,79 @@
                 </div>
             </div>
 
+            <div class="poll-card">
+                <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #00ff88;">🌶️ Hot or Not?</h3>
+                <p style="font-size: 14px; color: #ddd; margin: 0 0 10px 0;"><strong>Elumelu</strong> — Young Jonn</p>
+                <div class="poll-options">
+                    <button class="poll-option" onclick="castHotOrNot('hot')">🔥 Hot</button>
+                    <button class="poll-option" onclick="castHotOrNot('not')">❄️ Not</button>
+                </div>
+                <div id="hotNotResults" style="display:none;">
+                    <p style="font-size: 12px; color: #999; margin: 8px 0 2px 0;">🔥 Hot — <span id="hotPct">0</span>%</p>
+                    <div class="poll-bar-track"><div class="poll-bar-fill" id="hotBar"></div></div>
+                    <p style="font-size: 12px; color: #999; margin: 8px 0 2px 0;">❄️ Not — <span id="notPct">0</span>%</p>
+                    <div class="poll-bar-track"><div class="poll-bar-fill" id="notBar"></div></div>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <h3 style="margin: 0 0 4px 0; font-size: 16px; color: #00ff88;">🧠 Naija Music Trivia</h3>
+                <p style="font-size: 13px; color: #999; margin: 0 0 14px 0;">Test your Naija music knowledge — 3 quick questions.</p>
+
+                <div id="triviaQ1">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">1. Which artist sings "Way Maker"?</p>
+                    <button class="quiz-option" onclick="answerTrivia(1, true)">Sinach</button>
+                    <button class="quiz-option" onclick="answerTrivia(1, false)">Mercy Chinwo</button>
+                    <button class="quiz-option" onclick="answerTrivia(1, false)">Ada Ehi</button>
+                </div>
+
+                <div id="triviaQ2" style="display:none;">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">2. "Calm Down" became a global hit after a remix with which international star?</p>
+                    <button class="quiz-option" onclick="answerTrivia(2, false)">Ariana Grande</button>
+                    <button class="quiz-option" onclick="answerTrivia(2, true)">Selena Gomez</button>
+                    <button class="quiz-option" onclick="answerTrivia(2, false)">Dua Lipa</button>
+                </div>
+
+                <div id="triviaQ3" style="display:none;">
+                    <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">3. Young Jonn's song "Elumelu" is named after which real-life Nigerian figure?</p>
+                    <button class="quiz-option" onclick="answerTrivia(3, false)">Aliko Dangote</button>
+                    <button class="quiz-option" onclick="answerTrivia(3, true)">Tony Elumelu</button>
+                    <button class="quiz-option" onclick="answerTrivia(3, false)">Femi Otedola</button>
+                </div>
+
+                <div class="quiz-result" id="triviaResult"></div>
+            </div>
+
             <div class="recap-card">
                 <h3 style="margin: 0 0 10px 0; font-size: 16px; color: #00ff88;">📊 Your Naija Music Hub Recap</h3>
                 <p class="recap-line" id="recapLikes">❤️ Songs liked: 0</p>
                 <p class="recap-line" id="recapReactions">🔥 Reactions given: 0</p>
                 <p class="recap-line" id="recapStreak">📅 Visit streak: 1 day</p>
                 <button class="request-btn" style="margin-top: 10px;" onclick="copyRecap()">📋 Copy My Recap to Share</button>
+            </div>
+
+            <div class="recap-card">
+                <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #00ff88;">⭐ Your Level</h3>
+                <div style="text-align:center; margin-bottom: 10px;">
+                    <div style="font-size: 22px; font-weight: bold; color: #00ff88;" id="levelName">Newbie</div>
+                    <div style="font-size: 12px; color: #999;" id="levelPoints">0 points</div>
+                </div>
+                <div class="poll-bar-track"><div class="poll-bar-fill" id="levelProgress" style="background:#ffb400;"></div></div>
+                <p style="font-size: 11px; color: #888; margin: 6px 0 0 0; text-align:center;">Newbie → DJ → Superstar → Legend</p>
+            </div>
+
+            <div class="recap-card">
+                <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #00ff88;">🏅 My Badges</h3>
+                <div class="badge-grid">
+                    <div class="badge-item" id="badge-streak3"><span class="badge-emoji">🔥</span><span class="badge-label">3-Day Streak</span></div>
+                    <div class="badge-item" id="badge-streak7"><span class="badge-emoji">🏆</span><span class="badge-label">7-Day Streak</span></div>
+                    <div class="badge-item" id="badge-superfan"><span class="badge-emoji">❤️</span><span class="badge-label">Super Fan</span></div>
+                    <div class="badge-item" id="badge-vibemaster"><span class="badge-emoji">🎧</span><span class="badge-label">Vibe Master</span></div>
+                    <div class="badge-item" id="badge-voice"><span class="badge-emoji">💬</span><span class="badge-label">Voice Heard</span></div>
+                    <div class="badge-item" id="badge-sharer"><span class="badge-emoji">📤</span><span class="badge-label">Recap Sharer</span></div>
+                    <div class="badge-item" id="badge-trivia"><span class="badge-emoji">🧠</span><span class="badge-label">Trivia Whiz</span></div>
+                    <div class="badge-item" id="badge-critic"><span class="badge-emoji">🌶️</span><span class="badge-label">Music Critic</span></div>
+                </div>
             </div>
         </div>
 
@@ -1012,347 +1198,135 @@
         </div>
     </div>
 
-    <script src="https://pl30228811.effectivecpmnetwork.com/f3/18/3c/f3183ce9d4b72878d2927e27e95d20d7.js"></script>
+    <div id="forgivenessScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Forgiveness</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Asake</p>
 
-    <footer style="background-color: #1f1f1f; text-align: center; padding: 25px; border-top: 1px solid #333; margin-top: 40px;">
-        <p style="margin: 0; font-size: 14px; color: #aaa; font-weight: bold;">
-            ⚡ Built and Programmed by <span style="color: #00ff88;">Eduok Divine Richard</span> ⚡
-        </p>
-        <p style="margin: 5px 0 0 0; font-size: 11px; color: #666;">
-            All Code Compiled Completely Offline on a Smartphone
-        </p>
-    </footer>
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A mid-tempo, reflective record blending fuji-inspired vocal runs with smooth Afrobeats production.
+            </div>
 
-    <script>
-        var allScreens = [
-            'homeScreen','lonelyStreetsScreen','theNightsScreen','billionaireScreen',
-            'higherScreen','calmDownScreen','wayMakerScreen','excessLoveScreen','naraScreen',
-            'rushScreen','bandanaScreen','veryGoodGodScreen'
-        ];
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Asake has built his sound around a distinctive blend of street-pop, fuji, and amapiano
+                influences, and this track continues that signature fusion. Currently sitting among the
+                UK's top Afrobeats chart entries, it showcases the melodic, call-and-response vocal style
+                that's made him one of the genre's most recognizable voices since his breakout a few years
+                ago.
+            </p>
 
-        function switchScreen(screenId) {
-            allScreens.forEach(function(id) {
-                document.getElementById(id).style.display = 'none';
-            });
-            document.getElementById(screenId).style.display = 'block';
-            window.scrollTo({ top: 0 });
-        }
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Forgiveness Asake" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Forgiveness%20Asake" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Forgiveness%20Asake" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Forgiveness%20Asake" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
 
-        function filterSongs() {
-            var query = document.getElementById('searchInput').value.toLowerCase();
-            var cards = document.getElementsByClassName('songCard');
-            for (var i = 0; i < cards.length; i++) {
-                var name = cards[i].getAttribute('data-name');
-                if (name) {
-                    cards[i].style.display = name.includes(query) ? 'block' : 'none';
-                }
-            }
-        }
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-forgivenessScreen" onclick="toggleLike('forgivenessScreen')">🤍 <span id="likeCount-forgivenessScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('forgivenessScreen')">🔗 Copy Link</button>
+            </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','fire')">🔥 <span id="reaction-forgivenessScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','love')">😍 <span id="reaction-forgivenessScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','pray')">🙏 <span id="reaction-forgivenessScreen-pray">0</span></button>
+            </div>
 
-        function filterGenre(genre, btn) {
-            var buttons = document.getElementsByClassName('tab-btn');
-            for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
-            btn.classList.add('active');
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Forgiveness%20by%20Asake%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Forgiveness%20by%20Asake" target="_blank">X / Twitter</a>
+            </div>
 
-            var cards = document.getElementsByClassName('songCard');
-            for (var i = 0; i < cards.length; i++) {
-                var g = cards[i].getAttribute('data-genre');
-                if (g) {
-                    cards[i].style.display = (genre === 'all' || g === genre) ? 'block' : 'none';
-                }
-            }
-        }
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('backOutsideScreen')">🎵 Back Outside — BNXN & Sarz</a>
+            <a class="related-card" onclick="switchScreen('bandanaScreen')">🎵 Bandana — Fireboy DML ft. Asake</a>
+        </div>
+    </div>
 
-        function toggleTheme() {
-            var body = document.body;
-            var btn = document.getElementById('themeBtn');
-            body.classList.toggle('light');
-            btn.textContent = body.classList.contains('light') ? '☀️ Light' : '🌙 Dark';
-        }
+    <div id="backOutsideScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Back Outside</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By BNXN & Sarz</p>
 
-        function getLikes() {
-            try {
-                return JSON.parse(localStorage.getItem('nmh_likes') || '{}');
-            } catch (e) {
-                return {};
-            }
-        }
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A smooth, groove-driven collaboration pairing soulful vocals with polished production.
+            </div>
 
-        function initLikes() {
-            var likes = getLikes();
-            allScreens.forEach(function(id) {
-                if (id === 'homeScreen') return;
-                var btn = document.getElementById('like-' + id);
-                var countEl = document.getElementById('likeCount-' + id);
-                if (!btn || !countEl) return;
-                var data = likes[id] || { liked: false, count: 0 };
-                countEl.textContent = data.count;
-                if (data.liked) {
-                    btn.classList.add('liked');
-                    btn.innerHTML = '❤️ <span id="likeCount-' + id + '">' + data.count + '</span>';
-                }
-            });
-        }
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                BNXN (formerly known as Buju) has built a reputation for melodic, street-hymn style vocals,
+                while Sarz stands as one of Afrobeats' most in-demand producers, known for sleek, minimal
+                instrumentals that let vocalists shine. Together on this track, currently charting on the
+                UK's Official Afrobeats Chart, the pairing plays to both their strengths — a laid-back,
+                confident record built for repeat plays.
+            </p>
 
-        function toggleLike(screenId) {
-            var likes = getLikes();
-            var data = likes[screenId] || { liked: false, count: 0 };
-            var btn = document.getElementById('like-' + screenId);
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Back Outside BNXN Sarz" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Back%20Outside%20BNXN%20Sarz" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Back%20Outside%20BNXN%20Sarz" target="_blank" rel="noopener">🎧 Spotify</a>
+                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Back%20Outside%20BNXN%20Sarz" target="_blank" rel="noopener">🎵 Boomplay</a>
+            </div>
 
-            if (data.liked) {
-                data.liked = false;
-                data.count = Math.max(0, data.count - 1);
-                btn.classList.remove('liked');
-                btn.innerHTML = '🤍 <span id="likeCount-' + screenId + '">' + data.count + '</span>';
-            } else {
-                data.liked = true;
-                data.count = data.count + 1;
-                btn.classList.add('liked');
-                btn.innerHTML = '❤️ <span id="likeCount-' + screenId + '">' + data.count + '</span>';
-            }
+            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
+                <button class="like-btn" id="like-backOutsideScreen" onclick="toggleLike('backOutsideScreen')">🤍 <span id="likeCount-backOutsideScreen">0</span></button>
+                <button class="copy-btn" onclick="copyLink('backOutsideScreen')">🔗 Copy Link</button>
+            </div>
+            <div class="reaction-row">
+                <button class="reaction-btn" onclick="reactToSong('backOutsideScreen','fire')">🔥 <span id="reaction-backOutsideScreen-fire">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('backOutsideScreen','love')">😍 <span id="reaction-backOutsideScreen-love">0</span></button>
+                <button class="reaction-btn" onclick="reactToSong('backOutsideScreen','pray')">🙏 <span id="reaction-backOutsideScreen-pray">0</span></button>
+            </div>
 
-            likes[screenId] = data;
-            try {
-                localStorage.setItem('nmh_likes', JSON.stringify(likes));
-            } catch (e) {}
-        }
+            <div class="share-row">
+                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Back%20Outside%20by%20BNXN%20%26%20Sarz%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
+                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Back%20Outside%20by%20BNXN%20and%20Sarz" target="_blank">X / Twitter</a>
+            </div>
 
-        function copyLink(screenId) {
-            var url = window.location.href.split('#')[0] + '#' + screenId;
-            var toast = document.getElementById('toast');
+            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
+            <a class="related-card" onclick="switchScreen('forgivenessScreen')">🎵 Forgiveness — Asake</a>
+            <a class="related-card" onclick="switchScreen('elumeluScreen')">🎵 Elumelu — Young Jonn</a>
+        </div>
+    </div>
 
-            function showToast() {
-                toast.style.display = 'block';
-                setTimeout(function() { toast.style.display = 'none'; }, 2000);
-            }
+    <div id="elumeluScreen" style="padding: 20px; display: none;">
+        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
+        <div class="songCard">
+            <h2 style="color: #00ff88; margin-top: 0;">Elumelu</h2>
+            <p class="read-time">⏱ 2 min read</p>
+            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Young Jonn</p>
 
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(showToast).catch(function() {
-                    fallbackCopy(url);
-                    showToast();
-                });
-            } else {
-                fallbackCopy(url);
-                showToast();
-            }
-        }
+            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
+            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
+                A bouncy, feel-good Afro-fusion anthem about ambition and hard-earned success.
+            </div>
 
-        function fallbackCopy(text) {
-            var el = document.createElement('textarea');
-            el.value = text;
-            el.style.position = 'fixed';
-            el.style.opacity = '0';
-            document.body.appendChild(el);
-            el.select();
-            try { document.execCommand('copy'); } catch (e) {}
-            document.body.removeChild(el);
-        }
+            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
+                Young Jonn built his name as one of Nigeria's most in-demand producers before stepping into
+                the spotlight as a solo artist. Released in May 2026, "Elumelu" takes its title from Tony
+                Elumelu, the Nigerian billionaire industrialist and philanthropist, using the name as a
+                symbol of ambition and financial success. The track has already caught on quickly on
+                TikTok, with fans creating dance and reaction content around its catchy, upbeat energy.
+            </p>
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.addEventListener('scroll', function() {
-            var btn = document.getElementById('scrollTopBtn');
-            btn.style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
-
-        function surpriseMe() {
-            var songScreens = allScreens.filter(function(id) { return id !== 'homeScreen'; });
-            var pick = songScreens[Math.floor(Math.random() * songScreens.length)];
-            switchScreen(pick);
-        }
-
-        function requestSong() {
-            var input = document.getElementById('requestInput');
-            var value = input.value.trim();
-            if (!value) {
-                input.focus();
-                return;
-            }
-            var text = encodeURIComponent('Hi! I would love to see this song featured on Naija Music Hub: ' + value);
-            window.open('https://wa.me/?text=' + text, '_blank');
-            input.value = '';
-        }
-
-        function getReactions() {
-            try {
-                return JSON.parse(localStorage.getItem('nmh_reactions') || '{}');
-            } catch (e) {
-                return {};
-            }
-        }
-
-        function initReactions() {
-            var reactions = getReactions();
-            allScreens.forEach(function(id) {
-                if (id === 'homeScreen') return;
-                ['fire', 'love', 'pray'].forEach(function(emoji) {
-                    var el = document.getElementById('reaction-' + id + '-' + emoji);
-                    if (!el) return;
-                    var key = id + '-' + emoji;
-                    el.textContent = reactions[key] || 0;
-                });
-            });
-        }
-
-        function reactToSong(screenId, emoji) {
-            var reactions = getReactions();
-            var key = screenId + '-' + emoji;
-            reactions[key] = (reactions[key] || 0) + 1;
-            try {
-                localStorage.setItem('nmh_reactions', JSON.stringify(reactions));
-            } catch (e) {}
-            var el = document.getElementById('reaction-' + screenId + '-' + emoji);
-            if (el) el.textContent = reactions[key];
-        }
-
-        var quizScores = { afrobeats: 0, gospel: 0, pop: 0 };
-        function answerQuiz(qNum, genre) {
-            quizScores[genre]++;
-            document.getElementById('quizQ' + qNum).style.display = 'none';
-            if (qNum < 3) {
-                document.getElementById('quizQ' + (qNum + 1)).style.display = 'block';
-            } else {
-                var top = 'afrobeats';
-                if (quizScores.gospel >= quizScores[top] && quizScores.gospel >= quizScores.pop) top = 'gospel';
-                else if (quizScores.pop >= quizScores[top] && quizScores.pop >= quizScores.gospel) top = 'pop';
-
-                var results = {
-                    afrobeats: { label: '🔥 The Afrobeats Spirit', desc: 'You bring the energy everywhere you go. Party starter, confident, always moving.' },
-                    gospel: { label: '🙏 The Worship Soul', desc: 'You lead with gratitude and grounded faith. People feel calm around you.' },
-                    pop: { label: '🎧 The Dreamer', desc: 'Reflective and melodic — you feel music deeply and vibe your own way.' }
-                };
-                var r = results[top];
-                var resultBox = document.getElementById('quizResult');
-                resultBox.innerHTML = '<div style="font-size:16px; margin-bottom:6px;">' + r.label + '</div><div style="font-weight:normal; font-size:13px;">' + r.desc + '</div>';
-                resultBox.style.display = 'block';
-            }
-        }
-
-        function getPollVotes() {
-            try {
-                return JSON.parse(localStorage.getItem('nmh_poll_rushvcalm') || '{"a":0,"b":0}');
-            } catch (e) {
-                return { a: 0, b: 0 };
-            }
-        }
-
-        function castVote(choice) {
-            var votes = getPollVotes();
-            votes[choice]++;
-            try {
-                localStorage.setItem('nmh_poll_rushvcalm', JSON.stringify(votes));
-            } catch (e) {}
-            renderPollResults(votes);
-        }
-
-        function renderPollResults(votes) {
-            var total = votes.a + votes.b;
-            var pctA = total > 0 ? Math.round((votes.a / total) * 100) : 0;
-            var pctB = total > 0 ? Math.round((votes.b / total) * 100) : 0;
-            document.getElementById('pollPctA').textContent = pctA;
-            document.getElementById('pollPctB').textContent = pctB;
-            document.getElementById('pollBarA').style.width = pctA + '%';
-            document.getElementById('pollBarB').style.width = pctB + '%';
-            document.getElementById('pollResults').style.display = 'block';
-        }
-
-        function initPoll() {
-            var votes = getPollVotes();
-            if (votes.a > 0 || votes.b > 0) renderPollResults(votes);
-        }
-
-        function updateCountdown() {
-            var now = new Date();
-            var target = new Date();
-            target.setHours(18, 0, 0, 0);
-            var daysUntilFriday = (5 - now.getDay() + 7) % 7;
-            target.setDate(now.getDate() + daysUntilFriday);
-            if (daysUntilFriday === 0 && now > target) {
-                target.setDate(target.getDate() + 7);
-            }
-            var diff = target - now;
-            var d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            var m = Math.floor((diff / (1000 * 60)) % 60);
-            var s = Math.floor((diff / 1000) % 60);
-            var el = document.getElementById('countdownTimer');
-            if (el) el.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
-        }
-
-        function initStreak() {
-            var today = new Date().toISOString().slice(0, 10);
-            var data;
-            try {
-                data = JSON.parse(localStorage.getItem('nmh_streak') || '{}');
-            } catch (e) {
-                data = {};
-            }
-            if (!data.lastVisit) {
-                data = { lastVisit: today, streak: 1 };
-            } else if (data.lastVisit !== today) {
-                var last = new Date(data.lastVisit);
-                var now = new Date(today);
-                var diffDays = Math.round((now - last) / (1000 * 60 * 60 * 24));
-                data.streak = diffDays === 1 ? (data.streak || 1) + 1 : 1;
-                data.lastVisit = today;
-            }
-            try {
-                localStorage.setItem('nmh_streak', JSON.stringify(data));
-            } catch (e) {}
-            var badge = document.getElementById('streakBadge');
-            if (badge) badge.textContent = '🔥 Day ' + data.streak;
-            var recapStreak = document.getElementById('recapStreak');
-            if (recapStreak) recapStreak.textContent = '📅 Visit streak: ' + data.streak + ' day' + (data.streak === 1 ? '' : 's');
-            return data.streak;
-        }
-
-        function initRecap() {
-            var likes = getLikes();
-            var reactions = getReactions();
-            var likeCount = 0;
-            Object.keys(likes).forEach(function(k) { if (likes[k].liked) likeCount++; });
-            var reactionCount = 0;
-            Object.keys(reactions).forEach(function(k) { reactionCount += reactions[k]; });
-
-            var likesEl = document.getElementById('recapLikes');
-            var reactionsEl = document.getElementById('recapReactions');
-            if (likesEl) likesEl.textContent = '❤️ Songs liked: ' + likeCount;
-            if (reactionsEl) reactionsEl.textContent = '🔥 Reactions given: ' + reactionCount;
-        }
-
-        function copyRecap() {
-            var likesEl = document.getElementById('recapLikes');
-            var reactionsEl = document.getElementById('recapReactions');
-            var streakEl = document.getElementById('recapStreak');
-            var text = 'My Naija Music Hub Recap 🎧\n' + likesEl.textContent + '\n' + reactionsEl.textContent + '\n' + streakEl.textContent + '\nCheck it out: ' + window.location.href.split('#')[0];
-            var toast = document.getElementById('toast');
-
-            function showToast() {
-                toast.textContent = 'Recap copied!';
-                toast.style.display = 'block';
-                setTimeout(function() { toast.style.display = 'none'; toast.textContent = 'Link copied!'; }, 2000);
-            }
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(showToast).catch(function() {
-                    fallbackCopy(text);
-                    showToast();
-                });
-            } else {
-                fallbackCopy(text);
-                showToast();
-            }
-        }
-
-        initLikes();
-        initReactions();
-        initStreak();
-        initRecap();
-        initPoll();
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    </script>
-</body>
-</html>
+            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
+            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
+                Tap below to stream "Elumelu Young Jonn" on your platform of choice.
+            </div>
+            <div class="listen-row">
+                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Elumelu%20Young%20Jonn" target="_blank" rel="noopener">▶ YouTube</a>
+                <a class="listen-btn" style=
