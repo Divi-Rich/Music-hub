@@ -13,6 +13,8 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bgGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231f1f1f%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230a0a0a%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22greenGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2300ff88%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2300cc6e%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%0A%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2298%22%20fill%3D%22url%28%23bgGrad%29%22%20stroke%3D%22%2300ff88%22%20stroke-width%3D%223%22/%3E%0A%0A%20%20%3C%21--%20Soundwave%20bars%20forming%20an%20N%20shape%20--%3E%0A%20%20%3Crect%20x%3D%2255%22%20y%3D%2270%22%20width%3D%2210%22%20height%3D%2260%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%20%20%3Crect%20x%3D%2272%22%20y%3D%2255%22%20width%3D%2210%22%20height%3D%2290%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%20%20%3Crect%20x%3D%2289%22%20y%3D%2280%22%20width%3D%2210%22%20height%3D%2240%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%20%20%3Crect%20x%3D%22106%22%20y%3D%2245%22%20width%3D%2210%22%20height%3D%22110%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%20%20%3Crect%20x%3D%22123%22%20y%3D%2265%22%20width%3D%2210%22%20height%3D%2270%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%20%20%3Crect%20x%3D%22140%22%20y%3D%2280%22%20width%3D%2210%22%20height%3D%2240%22%20rx%3D%225%22%20fill%3D%22url%28%23greenGrad%29%22/%3E%0A%0A%20%20%3C%21--%20Small%20accent%20dot%2C%20like%20a%20play/pulse%20indicator%20--%3E%0A%20%20%3Ccircle%20cx%3D%22100%22%20cy%3D%2230%22%20r%3D%226%22%20fill%3D%22%23ff3366%22/%3E%0A%3C/svg%3E%0A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#00ff88">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.svg">
     <style>
         * { box-sizing: border-box; }
         body {
@@ -298,6 +300,10 @@
             <span class="artist-chip" onclick="filterByArtist('Asake', this)">Asake</span>
             <span class="artist-chip" onclick="filterByArtist('BNXN', this)">BNXN</span>
             <span class="artist-chip" onclick="filterByArtist('Young Jonn', this)">Young Jonn</span>
+            <span class="artist-chip" onclick="filterByArtist('Wande Coal', this)">Wande Coal</span>
+            <span class="artist-chip" onclick="filterByArtist('Blaqbonez', this)">Blaqbonez</span>
+            <span class="artist-chip" onclick="filterByArtist('Davido', this)">Davido</span>
+            <span class="artist-chip" onclick="filterByArtist('Second Voice', this)">Second Voice</span>
         </div>
         <div class="artist-bio-box" id="artistBioBox"></div>
 
@@ -402,6 +408,41 @@
             <h3 style="margin: 0 0 4px 0;">Elumelu</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Young Jonn</p>
             <p class="genre-tag">🎤 Afrobeats</p>
             <button onclick="switchScreen('elumeluScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="oshe wande coal wizkid" data-genre="afrobeats" data-artist="Wande Coal" data-mood="hype">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Oshe</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Wande Coal ft. Wizkid</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('osheScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="chanel blaqbonez asake" data-genre="afrobeats" data-artist="Blaqbonez" data-mood="hype">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Chanel</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Blaqbonez ft. Asake</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('chanelScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="i know who i be davido" data-genre="afrobeats" data-artist="Davido" data-mood="hype">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">I Know Who I Be</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Davido</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('iKnowScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="excess victory mercy chinwo nathaniel bassey" data-genre="gospel" data-artist="Mercy Chinwo" data-mood="worship">
+            <span class="badge">✨ NEW</span>
+            <h3 style="margin: 0 0 4px 0;">Excess Victory</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Mercy Chinwo ft. Nathaniel Bassey</p>
+            <p class="genre-tag">🙏 Gospel</p>
+            <button onclick="switchScreen('excessVictoryScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
+        </div>
+
+        <div class="songCard" data-name="let me be second voice" data-genre="afrobeats" data-artist="Second Voice" data-mood="chill">
+            <span class="badge">🔥 HOT</span>
+            <h3 style="margin: 0 0 4px 0;">Let Me Be</h3><p style="color: #ccc; font-size: 14px; margin: 0 0 4px 0;">By Second Voice</p>
+            <p class="genre-tag">🎤 Afrobeats</p>
+            <button onclick="switchScreen('letMeBeScreen')" style="width: 100%; background-color: #00ff88; color: #000; text-align: center; padding: 10px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">Read More</button>
         </div>
 
         <div style="margin-bottom: 20px;">
@@ -648,6 +689,58 @@
                     <div class="badge-item" id="badge-egg"><span class="badge-emoji">🥚</span><span class="badge-label">Secret Finder</span></div>
                 </div>
             </div>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🎙️ Local Artist Spotlight</h2>
+        <div class="request-box">
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">
+                Know an independent or up-and-coming Nigerian artist who deserves more shine? We want to
+                feature them here. Send us their name, a link to their music, and why you think they're
+                worth checking out.
+            </p>
+            <input type="text" id="artistSubmitInput" class="request-input" placeholder="Artist name + music link">
+            <button class="request-btn" onclick="submitArtist()">Submit Artist via WhatsApp</button>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">📅 Community Events</h2>
+        <div class="request-box">
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">
+                Got a concert, listening party, or local music event coming up? Share it with the
+                community here — we'll help spread the word.
+            </p>
+            <input type="text" id="eventSubmitInput" class="request-input" placeholder="Event name, date, and location">
+            <button class="request-btn" onclick="submitEvent()">Share Event via WhatsApp</button>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🌟 Fan of the Week</h2>
+        <div class="request-box">
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">
+                Screenshot your Recap card above and send it to us — we'll shout out the most active fan
+                each week right here on the site.
+            </p>
+            <button class="request-btn" onclick="submitFanOfWeek()">Submit My Recap via WhatsApp</button>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">📊 Fan Poll of the Month</h2>
+        <div class="poll-card">
+            <p style="font-size: 14px; color: #ddd; margin: 0 0 10px 0;">Which song has had the biggest moment this month?</p>
+            <div class="poll-options" style="flex-wrap: wrap;">
+                <button class="poll-option" onclick="castMonthlyVote('letmebe')" style="min-width: 45%;">Let Me Be</button>
+                <button class="poll-option" onclick="castMonthlyVote('oshe')" style="min-width: 45%;">Oshe</button>
+                <button class="poll-option" onclick="castMonthlyVote('elumelu')" style="min-width: 45%;">Elumelu</button>
+                <button class="poll-option" onclick="castMonthlyVote('chanel')" style="min-width: 45%;">Chanel</button>
+            </div>
+            <div id="monthlyPollResults" style="display:none; margin-top: 10px;"></div>
+        </div>
+
+        <h2 style="color: #00ff88; font-size: 22px;">🎬 Fan Content Wall</h2>
+        <div class="request-box">
+            <p style="color: #ccc; font-size: 14px; line-height: 1.7; margin: 0 0 12px 0;">
+                Made a dance video, cover, or reaction clip to a song featured here? Send us the link and
+                we might feature it.
+            </p>
+            <input type="text" id="fanContentInput" class="request-input" placeholder="Link to your video/clip">
+            <button class="request-btn" onclick="submitFanContent()">Submit via WhatsApp</button>
         </div>
 
         <h2 style="color: #00ff88; font-size: 22px;">About Naija Music Hub</h2>
@@ -1217,94 +1310,4 @@
                 <button class="copy-btn" onclick="copyLink('veryGoodGodScreen')">🔗 Copy Link</button>
             </div>
             <div class="reaction-row">
-                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','fire')">🔥 <span id="reaction-veryGoodGodScreen-fire">0</span></button>
-                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','love')">😍 <span id="reaction-veryGoodGodScreen-love">0</span></button>
-                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','pray')">🙏 <span id="reaction-veryGoodGodScreen-pray">0</span></button>
-            </div>
-
-            <div class="share-row">
-                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Very%20Good%20God%20by%20Nathaniel%20Bassey%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
-                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Very%20Good%20God%20by%20Nathaniel%20Bassey" target="_blank">X / Twitter</a>
-            </div>
-
-            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
-            <a class="related-card" onclick="switchScreen('wayMakerScreen')">🎵 Way Maker — Sinach</a>
-            <a class="related-card" onclick="switchScreen('excessLoveScreen')">🎵 Excess Love — Mercy Chinwo</a>
-        </div>
-    </div>
-
-    <div id="forgivenessScreen" style="padding: 20px; display: none;">
-        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
-        <div class="songCard">
-            <h2 style="color: #00ff88; margin-top: 0;">Forgiveness</h2>
-            <p class="read-time">⏱ 2 min read</p>
-            <p style="color: #aaa; font-style: italic; margin-top: 0;">By Asake</p>
-
-            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
-            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
-                A mid-tempo, reflective record blending fuji-inspired vocal runs with smooth Afrobeats production.
-            </div>
-
-            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
-            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
-                Asake has built his sound around a distinctive blend of street-pop, fuji, and amapiano
-                influences, and this track continues that signature fusion. Currently sitting among the
-                UK's top Afrobeats chart entries, it showcases the melodic, call-and-response vocal style
-                that's made him one of the genre's most recognizable voices since his breakout a few years
-                ago.
-            </p>
-
-            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
-            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom: 6px;">
-                Tap below to stream "Forgiveness Asake" on your platform of choice.
-            </div>
-            <div class="listen-row">
-                <a class="listen-btn" style="background:#FF0000; color:#fff;" href="https://www.youtube.com/results?search_query=Forgiveness%20Asake" target="_blank" rel="noopener">▶ YouTube</a>
-                <a class="listen-btn" style="background:#1DB954; color:#000;" href="https://open.spotify.com/search/Forgiveness%20Asake" target="_blank" rel="noopener">🎧 Spotify</a>
-                <a class="listen-btn" style="background:#00ff88; color:#000;" href="https://www.boomplay.com/search/all?q=Forgiveness%20Asake" target="_blank" rel="noopener">🎵 Boomplay</a>
-            </div>
-
-            <div style="display:flex; align-items:center; gap:10px; margin: 14px 0;">
-                <button class="like-btn" id="like-forgivenessScreen" onclick="toggleLike('forgivenessScreen')">🤍 <span id="likeCount-forgivenessScreen">0</span></button>
-                <button class="copy-btn" onclick="copyLink('forgivenessScreen')">🔗 Copy Link</button>
-            </div>
-            <div class="reaction-row">
-                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','fire')">🔥 <span id="reaction-forgivenessScreen-fire">0</span></button>
-                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','love')">😍 <span id="reaction-forgivenessScreen-love">0</span></button>
-                <button class="reaction-btn" onclick="reactToSong('forgivenessScreen','pray')">🙏 <span id="reaction-forgivenessScreen-pray">0</span></button>
-            </div>
-
-            <div class="share-row">
-                <a class="share-btn" style="background:#25D366;" href="https://wa.me/?text=Check%20out%20Forgiveness%20by%20Asake%20on%20Naija%20Music%20Hub" target="_blank">WhatsApp</a>
-                <a class="share-btn" style="background:#00ff88;" href="https://twitter.com/intent/tweet?text=Check%20out%20Forgiveness%20by%20Asake" target="_blank">X / Twitter</a>
-            </div>
-
-            <h3 style="color: #00ff88; font-size: 16px; margin-top: 24px;">You Might Also Like</h3>
-            <a class="related-card" onclick="switchScreen('backOutsideScreen')">🎵 Back Outside — BNXN & Sarz</a>
-            <a class="related-card" onclick="switchScreen('bandanaScreen')">🎵 Bandana — Fireboy DML ft. Asake</a>
-        </div>
-    </div>
-
-    <div id="backOutsideScreen" style="padding: 20px; display: none;">
-        <button onclick="switchScreen('homeScreen')" style="background: none; border: none; color: #00ff88; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 20px;">← Back to Home</button>
-        <div class="songCard">
-            <h2 style="color: #00ff88; margin-top: 0;">Back Outside</h2>
-            <p class="read-time">⏱ 2 min read</p>
-            <p style="color: #aaa; font-style: italic; margin-top: 0;">By BNXN & Sarz</p>
-
-            <p style="font-size: 14px; color: #888; margin-bottom: 4px;">Vibe:</p>
-            <div style="background-color: #161616; border-left: 3px solid #00ff88; padding: 10px 14px; font-style: italic; color: #ddd; margin-bottom: 20px;">
-                A smooth, groove-driven collaboration pairing soulful vocals with polished production.
-            </div>
-
-            <h3 style="color: #00ff88; font-size: 17px;">About the Song</h3>
-            <p style="font-size: 15px; line-height: 1.8; color: #ddd;">
-                BNXN (formerly known as Buju) has built a reputation for melodic, street-hymn style vocals,
-                while Sarz stands as one of Afrobeats' most in-demand producers, known for sleek, minimal
-                instrumentals that let vocalists shine. Together on this track, currently charting on the
-                UK's Official Afrobeats Chart, the pairing plays to both their strengths — a laid-back,
-                confident record built for repeat plays.
-            </p>
-
-            <h3 style="color: #00ff88; font-size: 17px;">Where to Listen</h3>
-            <div style="font-size: 15px; line-height: 1.8; color: #ddd; margin-bottom
+                <button class="reaction-btn" onclick="reactToSong('veryGoodGodScreen','fire')">🔥 <span id
